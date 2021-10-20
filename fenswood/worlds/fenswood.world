@@ -4,9 +4,9 @@
   
     <spherical_coordinates>
       <surface_model>EARTH_WGS84</surface_model>
-      <latitude_deg>51.423430</latitude_deg>
-      <longitude_deg>-2.671415</longitude_deg>
-      <elevation>50.0</elevation>
+      <latitude_deg>51.4233628</latitude_deg>
+      <longitude_deg>-2.671671</longitude_deg>
+      <elevation>100.0</elevation>
     </spherical_coordinates>
 
     <include>
@@ -14,7 +14,7 @@
     </include>
 
     <frame name="field">
-      <pose>0 0 0 0 0 0.5</pose>
+      <pose>0 0 0 0 0 -1.25</pose>
     </frame>
 
     <include>

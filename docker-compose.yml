@@ -13,6 +13,7 @@ services:
     image: uobflightlabstarling/starling-sim-ardupilot-copter:latest
     environment:
       - AP_USE_GAZEBO=true
+      - AP_HOME=51.4233628,-2.671671,100.0,0
   
   mavros:
     network_mode: host
