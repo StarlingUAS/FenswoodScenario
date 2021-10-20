@@ -1,6 +1,13 @@
 <?xml version="1.0" ?>
 <sdf version="1.4">
   <world name="default">
+  
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>51.423430</latitude_deg>
+      <longitude_deg>-2.671415</longitude_deg>
+      <elevation>50.0</elevation>
+    </spherical_coordinates>
 
     <include>
       <uri>model://sun</uri>

@@ -14,6 +14,7 @@
           args="-entity iris_demo
                 -file /ardupilot_gazebo/models/iris_with_ardupilot/model.sdf
                 -spawn_service_timeout 30.0
+                -z 0.1
                 "
     />
 
