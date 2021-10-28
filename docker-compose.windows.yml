@@ -2,7 +2,6 @@ version: '3'
 
 services:
   simhost:
-    network_mode: host
     image: uobflightlabstarling/starling-sim-iris-ap:latest
     volumes:
       - ./fenswood:/ros.env.d/fenswood
@@ -11,7 +10,6 @@ services:
       - "8080:8080"
 
   sitl:
-    network_mode: host
     image: uobflightlabstarling/starling-sim-ardupilot-copter:latest
     environment:
       - AP_USE_GAZEBO=true
@@ -20,7 +18,6 @@ services:
       - "18570:18570/udp"
   
   mavros:
-    network_mode: host
     image: uobflightlabstarling/starling-mavros:latest
     command: ros2 launch launch/mavros_bridge.launch.xml
     environment:
