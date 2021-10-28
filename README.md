@@ -18,7 +18,7 @@ Then launch the scenario with:
 ```sh
 docker-compose -f docker-compose.linux.uml up
 # or on windows:
-docker-compose -f docker-compose.windows.yml pull
+docker-compose -f docker-compose.windows.yml up
 ```
 
 The Gazebo web interface is then available on [localhost:8080](http://localhost:8080).
