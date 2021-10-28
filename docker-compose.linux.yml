@@ -25,3 +25,7 @@ services:
       - "MAVROS_FCU_URL=tcp://127.0.0.1:5760"
       - "MAVROS_CONFIG_PATH=/mavros_config_ap.yaml"
       - "MAVROS_PLUGINLISTS_PATH=/mavros_pluginlists_ap.yaml"
+
+  rosbridge-suite:
+    image: uobflightlabstarling/rosbridge-suite:latest
+    network_mode: host
