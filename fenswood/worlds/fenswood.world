@@ -115,5 +115,12 @@
       <static>1</static>
     </include>
 
+    <include>
+      <uri>model://area_of_interest</uri>
+      <name>aoi</name>
+      <pose relative_to="field">70 -200 10 0 0 0</pose>
+      <static>1</static>
+    </include>
+
   </world>
 </sdf>

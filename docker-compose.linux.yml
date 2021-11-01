@@ -15,16 +15,16 @@ services:
       - AP_USE_GAZEBO=true
       - AP_HOME=51.4233628,-2.671671,100.0,0
   
-  mavros:
-    network_mode: host
-    image: uobflightlabstarling/starling-mavros:latest
-    command: ros2 launch launch/mavros_bridge.launch.xml
-    environment:
-      - "MAVROS_TGT_FIRMWARE=apm"
-      - "MAVROS_TGT_SYSTEM=1"
-      - "MAVROS_FCU_URL=tcp://127.0.0.1:5760"
-      - "MAVROS_CONFIG_PATH=/mavros_config_ap.yaml"
-      - "MAVROS_PLUGINLISTS_PATH=/mavros_pluginlists_ap.yaml"
+  # mavros:
+  #   network_mode: host
+  #   image: uobflightlabstarling/starling-mavros:latest
+  #   command: ros2 launch launch/mavros_bridge.launch.xml
+  #   environment:
+  #     - "MAVROS_TGT_FIRMWARE=apm"
+  #     - "MAVROS_TGT_SYSTEM=1"
+  #     - "MAVROS_FCU_URL=tcp://127.0.0.1:5760"
+  #     - "MAVROS_CONFIG_PATH=/mavros_config_ap.yaml"
+  #     - "MAVROS_PLUGINLISTS_PATH=/mavros_pluginlists_ap.yaml"
 
   rosbridge-suite:
     image: uobflightlabstarling/rosbridge-suite:latest
