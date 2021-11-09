@@ -16,7 +16,7 @@ docker-compose -f docker-compose.windows.yml pull
 Then launch the scenario with:
 
 ```sh
-docker-compose -f docker-compose.linux.uml up
+docker-compose -f docker-compose.linux.yml up
 # or on windows:
 docker-compose -f docker-compose.windows.yml up
 ```
