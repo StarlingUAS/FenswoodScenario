@@ -45,3 +45,6 @@ docker run -it --rm --network fenswoodscenario_default uobflightlabstarling/exam
 
 See [the docs](https://docs.starlinguas.dev/guide/single-drone-local-machine/#2-running-example-ros2-offboard-controller-node) for further details
 
+## Details
+
+Target spawning is achieved via the `spawn_target.py` script. It spawns a specified number or yellow target rectangles and red hotspot circles around the 'annulus' of a volcano. See the script for more details. 
