@@ -16,14 +16,23 @@ docker-compose -f docker-compose.windows.yml pull
 Then launch the scenario with:
 
 ```sh
-docker-compose -f docker-compose.linux.uml up
+docker-compose -f docker-compose.linux.yml up
 # or on windows:
 docker-compose -f docker-compose.windows.yml up
 ```
 
 The Gazebo web interface is then available on [localhost:8080](http://localhost:8080).
 
-Any MAVLink compatible GCS can be connected to UDP 14550. Many GCS will do this automatically.
+On Linux, any MAVLink compatible GCS can be connected to UDP 14550. Many GCS will do this automatically.
+
+On Windows, any MAVLink compatible GCS can be connected to TCP 5761.
+
+### Troubleshooting
+
+The simulator needs to download some model files when it is first run so it will likely fail to spawn the vehicle.
+Leave it running for a few minutes then use `Ctrl+C` to exit and run it again. This should allow the model to spawn.
+The first time the model attempts to spawn, the simulator will need to download files for it too so it may be slow to
+start. Subsequent runs should be much faster.
 
 ## Windows and Linux
 
