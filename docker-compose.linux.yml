@@ -29,3 +29,8 @@ services:
   rosbridge-suite:
     image: uobflightlabstarling/rosbridge-suite:latest
     network_mode: host
+
+  # Uncomment for the UI Example 
+  # ui-example:
+  #   image: uobflightlabstarling/starling-ui-example
+  #   network_mode: host

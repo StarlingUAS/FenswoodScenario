@@ -35,3 +35,9 @@ services:
     image: uobflightlabstarling/rosbridge-suite:${STARLING_RELEASE:-latest}
     ports:
       - "9090:9090"
+
+  # Uncomment for the UI Example 
+  # ui-example:
+  #   image: uobflightlabstarling/starling-ui-example
+  #   ports:
+  #     - "3000:3000"
