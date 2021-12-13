@@ -31,6 +31,6 @@ services:
     network_mode: host
 
   # Uncomment for the UI Example 
-  # ui-example:
-  #   image: uobflightlabstarling/starling-ui-example
-  #   network_mode: host
+  ui-example:
+    image: uobflightlabstarling/starling-ui-example
+    network_mode: host
