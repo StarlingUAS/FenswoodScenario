@@ -1,4 +1,4 @@
-kbd {
+kbd > kbd {
     background-color: #eee;
     border-radius: 3px;
     border: 1px solid #b4b4b4;
