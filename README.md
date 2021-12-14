@@ -3,6 +3,10 @@
 This repository contains a small set of files that set up an ArduCopter vehicle in a representation of the Fenswood
 FARM. It leverages a number of images from Project Starling which holds the underlying framework.
 
+## Docs
+
+A slightly prettier version of the docs along with a [tutorial](https://starlinguas.github.io/FenswoodScenario/tutorials/fenswood_scenario/) can be found at [starlinguas.github.io/FenswoodScenario](https://starlinguas.github.io/FenswoodScenario/)
+
 ## Usage
 
 First, ensure all the required images are downloaded and up-to-date:
