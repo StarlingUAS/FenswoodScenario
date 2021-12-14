@@ -21,4 +21,5 @@ plugins:
 nav:
   - "Tutorials":
     - "Introduction to Starling with the Fenswood Scenario": 'tutorials/fenswood_scenario.md'
-  
+
+extra_css: [ kbd.css ]
