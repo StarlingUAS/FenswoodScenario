@@ -330,7 +330,7 @@ This will start 4 containers:
 Wait a minute or so for all of the containers to initialise. Once started, the simulator should be available to see in the browser.
 
 1. Open up the firefox browser (click on firefox on the sidebar, or press ++win++ and search for firefox)
-2. Go to [https://localhost:8080](https://localhost:8080)
+2. Go to [localhost:8080](http://localhost:8080)
 3. You should see something like the following
 
 ![Fenswood Firefox Screenshot](imgs/fenswoodscreenshot1.png)
@@ -480,7 +480,7 @@ Now unlike the simulator, you will not need to download the example from the int
 
 ### Running the Example Controller
 
-First, open up a terminal and start up the Fenswood Scenario Simulator if you haven't already (Refer to [](#running-the-example-scenario)). Double check it is open by going to Gazebo Web at [https://localhost:8080](https://localhost:8080)
+First, open up a terminal and start up the Fenswood Scenario Simulator if you haven't already (Refer to [](#running-the-example-scenario)). Double check it is open by going to Gazebo Web at [localhost:8080](http://localhost:8080)
 
 Then, open up a second terminal and navigate to the example_python_controller folder. The example controller can be started by running the following:
 ```console
@@ -492,7 +492,7 @@ With this command, the controller will start off and attempt to find a drone on 
 
 Once a drone has been found, it will attempt to connect to the ardupilot. Once connected the path the vehicle will take is initialised and it is ready to fly if the user sends a mission go.
 
-Now to send a mission go, you can use the provided simple UI that is started with the FenswoodScenario. Navigate to [https://localhost:3000](https://localhost:3000) in the browser, and a UI will start up:
+Now to send a mission go, you can use the provided simple UI that is started with the FenswoodScenario. Navigate to [localhost:3000](http://localhost:3000) in the browser, and a UI will start up:
 
 ![Starling UI](imgs/ui.png)
 
