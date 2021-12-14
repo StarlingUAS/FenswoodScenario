@@ -202,13 +202,19 @@ For Linux systems, see the following [install page](https://docs.docker.com/engi
 
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
-3. Install Docker (and docker-compose!):
+3. Add Docker's repository:
+
+        echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+4. Install Docker (and docker-compose!):
 
         sudo apt-get update
 
         sudo apt-get install docker-ce docker-ce-cli docker-compose containerd.io
 
-4. Test Docker installation:
+5. Test Docker installation:
 
         sudo docker run hello-world
 
