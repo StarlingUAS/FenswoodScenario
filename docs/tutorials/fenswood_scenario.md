@@ -409,7 +409,7 @@ A[Camera] -->|out| node[drone/camera]
 node --in--> C[Vision]
 C -->|out| node1[drone/recognised_objects]
 node --in--> D[SLAM]
-D -->|out| node2[drone/recognised_objects]
+D -->|out| node2[drone/slam_position]
 
 style node fill:#f9f,stroke:#333,stroke-width:4px
 style node1 fill:#f9f,stroke:#333,stroke-width:4px
