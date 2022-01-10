@@ -73,7 +73,7 @@ def generate_target_link(root, name, height, width, pos, yaw, z = 0.1, colour="G
     # Collision
     collision = ET.SubElement(link, "collision", name="collision")
     col_geometry = ET.SubElement(collision, "geometry")
-    col_box = ET.SubElement(col_geometry, "cylinder")
+    col_box = ET.SubElement(col_geometry, "box")
     ET.SubElement(col_box, "size").text = f"{height} {width} {model_height}"
 
 def spawn_entity(xml_file_location, location, target_name="target", spawn_timeout=30.0):
