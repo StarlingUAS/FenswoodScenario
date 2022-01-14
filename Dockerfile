@@ -1,6 +1,6 @@
 ARG VERSION=latest
 ARG REGISTRY
-FROM ${REGISTRY}uobflightlabstarling/starling-sim-iris-ap:${VERSION}}
+FROM ${REGISTRY}uobflightlabstarling/starling-sim-iris-ap:latest
 
 WORKDIR /ros.env.d
 
