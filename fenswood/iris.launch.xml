@@ -7,10 +7,10 @@
     <include unless="$(var spawn_only)" file="/ros_ws/launch/gzweb.launch.xml" >
         <arg name="world" value="fenswood.world" />
     </include>
-    
-    <node unless="$(var sim_only)" 
-          pkg="gazebo_ros" 
-          exec="spawn_entity.py" 
+
+    <node unless="$(var sim_only)"
+          pkg="gazebo_ros"
+          exec="spawn_entity.py"
           args="-entity iris_demo
                 -file /ardupilot_gazebo/models/iris_with_ardupilot/model.sdf
                 -spawn_service_timeout 30.0
@@ -21,21 +21,13 @@
     <!-- Randomly spawn a set number of targets with an optional random seed -->
     <executable unless="$(var sim_only)"
           cwd="/ros.env.d/fenswood"
-          cmd="python3 spawn_targets.py
-                -num_landing_targets 2
-                -num_hotspots 5
-                -annulus_radius 40
-                -hotspot_radius 3
-                -target_length 20
-                -target_width 5
-                -random_seed 1234
-              "
+          cmd="python3 spawn_targets.py"
           name="spawn_targets"
           output="screen"
     />
 
     <!-- An example for how to read from a file. Rember to use - - build -->
-    <!-- 
+    <!--
     <executable unless="$(var sim_only)"
           cwd="/ros.env.d/fenswood"
           cmd="python3 spawn_targets.py
@@ -44,5 +36,5 @@
           name="spawn_targets"
           output="screen"
     /> -->
-    
+
 </launch>
