@@ -12,20 +12,23 @@ A slightly prettier version of the docs along with a [tutorial](https://starling
 First, ensure all the required images are downloaded and up-to-date:
 
 ```sh
-docker-compose -f docker-compose.linux.yml pull
-# or on windows:
-docker-compose -f docker-compose.windows.yml pull
+docker-compose pull
 ```
 
 Then launch the scenario with:
 
 ```sh
-docker-compose -f docker-compose.linux.yml up
-# or on windows:
-docker-compose -f docker-compose.windows.yml up
+docker-compose up
 ```
 
+> *Note:* If you wish to develop natively, or connect to ROS systems running locally on your system, you can run the 
+> system in host mode by using `docker-compose.host.yml` file instead:
+> ```
+> docker-compose -f docker-compose.host.yml up
+> ```
+
 The Gazebo web interface is then available on [localhost:8080](http://localhost:8080).
+The Example Dashboard interface is then available on [localhost:3000](http://localhost:3000).
 
 On Linux, any MAVLink compatible GCS can be connected to UDP 14550. Many GCS will do this automatically.
 
@@ -38,12 +41,12 @@ Leave it running for a few minutes then use `Ctrl+C` to exit and run it again. T
 The first time the model attempts to spawn, the simulator will need to download files for it too so it may be slow to
 start. Subsequent runs should be much faster.
 
-## Windows and Linux
+### Connecting to other things
 
-Each example file has a *linux* and *windows* variant.
+When docker-compose is run, it will create its own private network to connect between the containers specified in the file. 
+The default `docker-compose.yml` file variant creates network named `fenswoodscenario_default` (named after the parent folder + `_default`). This network is segregated from your local network traffic *except* for the exposed ports specified in the docker-compose file which are now accessible from `localhost`. Any other ROS2 nodes will need to be wrapped in a docker container for running and run with `--network fenswoodscenario_default`.
 
-- The *linux* variant allows you to run bare-metal application such as rviz2 or your own controllers natively. You do not need to wrap your own controllers in a docker container. Any exposed ports are automatically exposed to `localhost`.
-- The *windows* variant runs inside a docker-compose network named `fenswoodscenario_default`. This network is segregated from your local network traffic *except* for the exposed ports in the docker-compose file which are now accessible from `localhost`. Any other ROS2 nodes will need to be wrapped in a docker container for running and run with `--network fenswoodscenario_default`.
+> *Note:* If using the host docker-compose file then you do not need to specify any networks or exposed ports. 
 
 ## Developing your own ROS2 controller
 
@@ -86,9 +89,9 @@ SPAWN_TARGET_HOTSPOT_RADIUS |     3           | Radius of Red circular hotspots
 SPAWN_TARGET_TARGET_LENGTH |      20           | Length of yellow target
 SPAWN_TARGET_TARGET_WIDTH |       5       | Width of yellow target
 SPAWN_TARGET_RANDOM_SEED |       None        | Random seed for random generation, used for deterministic arrangements.
-SPAWN_TARGET_FILE_PATH |         ''        | File Path to fixed spawn, see example file i 'fenswood/target/default_target.json'
+SPAWN_TARGET_FILE_PATH |         ""        | File Path to fixed spawn, see example file i 'fenswood/target/default_target.json'
 
-Change Size and Location of Volcano Annulus:
+Change Size and Location of Volcano Annulus (Calculated from GPS positions):
 
 Name                  | Default Value                | Description
 ----------------------|------------------------------|------------
@@ -111,4 +114,18 @@ Note that if minimal angle and maximal distance are set incorrectly, it may caus
 
 ### Setting variables
 
-The variables can be set in the usual manner either in the docker run comamnd or in the docker-compose file.
+The variables can be set in the usual manner either in the docker run comamnd or in the docker-compose file. For example, you can create a new docker-compose file that is the same as the current one with the following modification to the `simhost` container:
+```yaml
+  simhost:
+    image: uobflightlabstarling/starling-sim-iris-ap:${STARLING_RELEASE:-latest}
+    environment:
+      - AP_SITL_HOST=sitl
+      - SPAWN_TARGET_RANDOM_SEED=22 # <- This specifies a random seed
+      - SPAWN_TARGET_GEN_BETWEEN_TARGET_LOC_ANGLE_MAX=8
+      - SPAWN_TARGET_GEN_HOTSPOT_ANGLE_VARIANCE=0.5
+    volumes:
+      - ./fenswood:/ros.env.d/fenswood
+    command: ["ros2", "launch", "/ros.env.d/fenswood/iris.launch.xml"]
+    ports:
+      - "8080:8080"
+```
