@@ -28,3 +28,5 @@ With docker, we have essentially **packaged** up the software with all of it's d
 Almost as importantly, because the installation and configuration is baked into the container, the system itself runs in a **consistent and replicatable environment**, hopefully allowing reproducable results each time. This can be different from running 'bare metal' on your local machine where you may have accidentally changed a configuration without knowing - leading to things going wrong.
 
 All of this means that it's less work for you as the user, as you don't need to go through the difficulties of set-up and installation of all the many individual components. And it's better for us as we can get down to the interesting stuff quicker making life better for everyone!
+
+We want to leave it like this for now, but if you want more detail you can see [this tutorial](https://starlinguas.github.io/starling_controller_templates/docker/) here. I would recommend you come back after you have finished section this tutorial.
