@@ -3,7 +3,7 @@ theme: readthedocs
 repo_url: https://github.com/StarlingUAS/FenswoodScenario
 site_description: 'Fenswood Scenario Simulation'
 docs_dir: 'docs'
-copyright: Copyright &copy; 2021 University of Bristol Flight Laboratory
+copyright: Copyright &copy; 2022 University of Bristol Flight Laboratory
 
 markdown_extensions:
   - toc:
@@ -20,6 +20,12 @@ plugins:
 
 nav:
   - "Tutorials":
-    - "Introduction to Starling with the Fenswood Scenario": 'tutorials/fenswood_scenario.md'
+    - "A Brief Introduction to Linux": 'tutorials/intro_to_linux.md'
+    - "Starling and Docker": "tutorials/starling_docker.md"
+    - "Running the Example Fenswood Scenario": "tutorials/running.md"
+    - "A Brief Introduction to ROS": "tutorials/intro_to_ros.md"
+    - "Running the Example UAV Controller": "tutorials/running_controller.md"
+    - "Inspecting and Debugging Starling with Docker and ROS": "tutorials/inspecting.md"
+    - "Summary and Conclusion": "tutorials/summary.md"
 
 extra_css: [ kbd.css ]
