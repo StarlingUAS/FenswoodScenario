@@ -1,0 +1,135 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="default">
+
+    <plugin name="attach_vehicle_plugin" filename="libAttachVehiclesPlugin.so">
+      <ros>
+        <namespace>attach_vehicle</namespace>
+      </ros>
+      <!-- Match variables within the controller cpp file -->
+      <drone_model>iris1</drone_model>
+      <rover_model>sensor_payload</rover_model>
+    </plugin> 
+  
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>51.4233628</latitude_deg>
+      <longitude_deg>-2.671671</longitude_deg>
+      <elevation>100.0</elevation>
+    </spherical_coordinates>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <frame name="field">
+      <pose>0 0 0 0 0 -1.25</pose>
+    </frame>
+
+    <include>
+      <uri>model://construction_cone</uri>
+      <name>static_cone_1</name>
+      <pose relative_to="field">2.0 0.0 0.05 0 0 0</pose>
+      <static>1</static>
+    </include>
+    
+    <include>
+      <uri>model://construction_cone</uri>
+      <name>static_cone_2</name>
+      <pose relative_to="field">-2.0 0.0 0.05 0 0 0</pose>
+      <static>1</static>
+    </include>
+    
+    <include>
+      <uri>model://house_1</uri>
+      <name>barn</name>
+      <pose relative_to="field">20 20 0 0 0 0</pose>
+      <static>1</static>
+    </include>
+    
+    <include>
+      <uri>model://grass_box</uri>
+      <name>grass_flat_near</name>
+      <pose relative_to="field">160 -55 0.05 0 0 0</pose>
+      <static>1</static>
+    </include>
+    
+    <include>
+      <uri>model://grass_box</uri>
+      <name>grass_flat_far</name>
+      <pose relative_to="field">160 -185 0.05 0 0 0</pose>
+      <static>1</static>
+    </include>
+    
+    <include>
+      <uri>model://grass_box</uri>
+      <name>grass_slope</name>
+      <pose relative_to="field">160 -315 13 -0.2 0 0</pose>
+      <static>1</static>
+    </include>
+      
+    <include>
+      <uri>model://pine_tree</uri>
+      <name>tree_1</name>
+      <pose relative_to="field">0 -370 26 0 0 0</pose>
+      <static>1</static>
+    </include>
+
+    <include>
+      <uri>model://pine_tree</uri>
+      <name>tree_2</name>
+      <pose relative_to="field">20 -370 26 0 0 0</pose>
+      <static>1</static>
+    </include>
+
+    <include>
+      <uri>model://pine_tree</uri>
+      <name>tree_3</name>
+      <pose relative_to="field">40 -370 26 0 0 0</pose>
+      <static>1</static>
+    </include>
+
+    <include>
+      <uri>model://pine_tree</uri>
+      <name>tree_4</name>
+      <pose relative_to="field">60 -370 26 0 0 0</pose>
+      <static>1</static>
+    </include>
+
+    <include>
+      <uri>model://pine_tree</uri>
+      <name>tree_5</name>
+      <pose relative_to="field">10 -370 26 0 0 0</pose>
+      <static>1</static>
+    </include>
+
+    <include>
+      <uri>model://pine_tree</uri>
+      <name>tree_6</name>
+      <pose relative_to="field">30 -370 26 0 0 0</pose>
+      <static>1</static>
+    </include>
+
+    <include>
+      <uri>model://pine_tree</uri>
+      <name>tree_7</name>
+      <pose relative_to="field">50 -370 26 0 0 0</pose>
+      <static>1</static>
+    </include>
+
+    <include>
+      <uri>model://pine_tree</uri>
+      <name>tree_8</name>
+      <pose relative_to="field">70 -370 26 0 0 0</pose>
+      <static>1</static>
+    </include>
+
+    <!-- <include>
+      <uri>model://area_of_interest</uri>
+      <name>aoi</name>
+      <pose>-195 -163 0.05 0 0 0.4</pose>
+      <static>1</static>
+    </include> -->
+
+  </world>
+</sdf>

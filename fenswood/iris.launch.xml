@@ -4,10 +4,11 @@
     <arg name="spawn_only" default="false"/>
     <arg name="sim_only" default="false"/>
 
-    <include unless="$(var spawn_only)" file="/ros_ws/launch/gzweb.launch.xml" >
-        <arg name="world" value="fenswood.world" />
+    <include unless="$(var spawn_only)" file="/ros_ws/launch/gzweb.launch.xml">
+        <arg name="world" value="fenswood_with_payload.world" />
     </include>
 
+    <!-- Spawn Iris -->
     <node unless="$(var sim_only)"
           pkg="gazebo_ros"
           exec="spawn_entity.py"
