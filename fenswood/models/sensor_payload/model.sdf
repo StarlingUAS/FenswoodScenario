@@ -1,0 +1,46 @@
+<?xml version='1.0'?>
+<sdf version='1.7'>
+  <model name='sensor_payload'>
+    <link name='link_0'>
+      <inertial>
+        <mass>0.001</mass>
+        <inertia>
+          <ixx>0.00166667</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00166667</iyy>
+          <iyz>0</iyz>
+          <izz>0.00166667</izz>
+        </inertia>
+        <pose>0 0 0 0 -0 0</pose>
+      </inertial>
+      
+      <visual name='visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.5 0.5 0.1</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Red</name>
+          </script>
+        </material>
+      </visual>
+
+      <collision name='collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.5 0.5 0.1</size>
+          </box>
+        </geometry>
+      </collision>
+
+    </link>
+    <static>0</static>
+    <allow_auto_disable>1</allow_auto_disable>
+  </model>
+</sdf>
