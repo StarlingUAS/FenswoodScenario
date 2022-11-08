@@ -3,7 +3,7 @@
   <model name='sensor_payload'>
     <link name='base_link'>
       <inertial>
-        <mass>0.001</mass>
+        <mass>0.01</mass>
         <inertia>
           <ixx>0.00166667</ixx>
           <ixy>0</ixy>
@@ -37,6 +37,32 @@
             <size>0.5 0.5 0.1</size>
           </box>
         </geometry>
+        <!-- Add surface properties to stop it from moving itself -->
+        <surface>
+            <friction>
+              <ode>
+                <mu>0.998000</mu>
+                <mu2>0.998000</mu2>
+                <fdir1>0.000000 0.000000 0.000000</fdir1>
+                <slip1>0.000000</slip1>
+                <slip2>0.000000</slip2>
+              </ode>
+            </friction>
+            <bounce>
+              <restitution_coefficient>0.000000</restitution_coefficient>
+              <threshold>100000.000000</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <soft_cfm>0.000000</soft_cfm>
+                <soft_erp>0.200000</soft_erp>
+                <kp>100000.000000</kp>
+                <kd>1.000000</kd>
+                <max_vel>100.000000</max_vel>
+                <min_depth>0.001000</min_depth>
+              </ode>
+            </contact>
+          </surface>
       </collision>
 
     </link>

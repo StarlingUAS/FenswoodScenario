@@ -44,8 +44,11 @@ void DockSim::Load(physics::WorldPtr _world, sdf::ElementPtr _sdf) {
 	} else {
 		this->rover_model_name = "sensor_payload";
 	}
-	if (_sdf->HasElement("allowable_offset")) {
-		this->allowable_offset = _sdf->Get<double>("allowable_offset");
+	if (_sdf->HasElement("allowable_offset_height")) {
+		this->allowable_offset_height = _sdf->Get<double>("allowable_offset_height");
+	}
+	if (_sdf->HasElement("allowable_offset_horizontal")) {
+		this->allowable_offset_height = _sdf->Get<double>("allowable_offset_horizontal");
 	}
 
 	// Create Publisher and Subscriber for ROS2 to interact with this
@@ -131,10 +134,13 @@ bool DockSim::attach() {
 	// Test if links are within docking tolerance
 	RCLCPP_INFO(this->ros_node_->get_logger(), "Testing tolerance");
 	auto poseOffset = parent_link->WorldPose() - child_link->WorldPose();
-	bool inTolerance = poseOffset.Pos().SquaredLength() < this->allowable_offset;
+	bool inToleranceHeight = poseOffset.Pos().Z() < this->allowable_offset_height;
+	poseOffset.Pos().Z(0.0);
+	bool inToleranceHorizontal = poseOffset.Pos().SquaredLength() < this->allowable_offset_horizontal;
+	bool inTolerance = inToleranceHeight && inToleranceHorizontal;
 
 	if(!inTolerance) {
-		RCLCPP_WARN(this->ros_node_->get_logger(), "Drone not within dock tolerance: %f", poseOffset.Pos().SquaredLength());
+		RCLCPP_WARN(this->ros_node_->get_logger(), "Drone not within object tolerance %f", poseOffset.Pos().SquaredLength());
 		return false;
 	}
 

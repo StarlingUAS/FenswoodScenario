@@ -9,6 +9,8 @@
       <!-- Match variables within the controller cpp file -->
       <drone_model>iris_demo</drone_model>
       <rover_model>sensor_payload</rover_model>
+      <allowable_offset_height>1.0</allowable_offset_height>
+      <allowable_offset_horizontal>0.2</allowable_offset_horizontal>
     </plugin>
 
     <spherical_coordinates>

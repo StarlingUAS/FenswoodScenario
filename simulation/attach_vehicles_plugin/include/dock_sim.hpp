@@ -50,7 +50,8 @@ class DockSim : public WorldPlugin {
 		physics::ModelPtr drone;
 		physics::ModelPtr rover;
 
-		double allowable_offset = 0.15;
+		double allowable_offset_height = 0.15;
+		double allowable_offset_horizontal = 0.2;
 
 		int jointCounter;
 
