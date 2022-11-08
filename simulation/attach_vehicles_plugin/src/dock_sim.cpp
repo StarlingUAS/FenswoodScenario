@@ -34,20 +34,20 @@ void DockSim::Load(physics::WorldPtr _world, sdf::ElementPtr _sdf) {
 	this->drone_model_name = "iris_1";
 
 	// // Get parameters specified in the sdf file.
-	// if (_sdf->HasElement("drone_model")) {
-	// 	this->drone_model_name = _sdf->Get<std::string>("drone_model");
-	// } else {
-	// 	this->drone_model_name = "drone";
-	// }
-	// if (_sdf->HasElement("rover_model")) {
-	// 	this->rover_model_name = _sdf->Get<std::string>("rover_model");
-	// } else {
-	// 	this->rover_model_name = "rover";
-	// }
-	// if (_sdf->HasElement("allowable_offset")) {
-	// 	this->allowable_offset = _sdf->Get<double>("allowable_offset");
-	// } 
-	
+	if (_sdf->HasElement("drone_model")) {
+		this->drone_model_name = _sdf->Get<std::string>("drone_model");
+	} else {
+		this->drone_model_name = "drone";
+	}
+	if (_sdf->HasElement("payload_model")) {
+		this->rover_model_name = _sdf->Get<std::string>("payload_model");
+	} else {
+		this->rover_model_name = "sensor_payload";
+	}
+	if (_sdf->HasElement("allowable_offset")) {
+		this->allowable_offset = _sdf->Get<double>("allowable_offset");
+	}
+
 	// Create Publisher and Subscriber for ROS2 to interact with this
 	this->dockStatusPub = this->ros_node_->create_publisher<std_msgs::msg::Bool>("status", 1);
 	this->dockControlSub = this->ros_node_->create_subscription<std_msgs::msg::Bool>(
@@ -58,28 +58,34 @@ void DockSim::Load(physics::WorldPtr _world, sdf::ElementPtr _sdf) {
 				std_msgs::msg::Bool status_msg;
 				status_msg.data = result;
 				dockStatusPub->publish(status_msg);
-			} else {	
+			} else {
 				auto result = this->detach();
 				std_msgs::msg::Bool status_msg;
-				status_msg.data = !result; // status of false means detached 
+				status_msg.data = !result; // status of false means detached
 				dockStatusPub->publish(status_msg);
 			}
 		}
 	);
-	
-	RCLCPP_INFO(this->ros_node_->get_logger(), "Publisher initialised on [%s]", this->dockStatusPub->get_topic_name());	
-	RCLCPP_INFO(this->ros_node_->get_logger(), "Subscriber initialised on [%s]", this->dockControlSub->get_topic_name());	
+
+	RCLCPP_INFO(this->ros_node_->get_logger(), "Publisher initialised on [%s]", this->dockStatusPub->get_topic_name());
+	RCLCPP_INFO(this->ros_node_->get_logger(), "Subscriber initialised on [%s]", this->dockControlSub->get_topic_name());
+
+	bool initially_attach = true;
+	if(initially_attach) {
+		RCLCPP_INFO(this->ros_node_->get_logger(), "Attempting to initially attach");
+		this->initial_attaching_timer = this->ros_node_->create_wall_timer(std::chrono::duration<double>(0.1), [this](){this->attach();});
+	}
 }
 
 bool DockSim::attach() {
 	if( !this->rover ) {
 		this->rover = world->ModelByName(this->rover_model_name);
 		if( !this->rover ) {
-			RCLCPP_ERROR(this->ros_node_->get_logger(), "Could not find rover model [%s]", this->rover_model_name.c_str());
+			RCLCPP_ERROR(this->ros_node_->get_logger(), "Could not find payload model [%s]", this->rover_model_name.c_str());
 			return false;
 			}
 		}
-	
+
 	if( !this->drone ) {
 		this->drone = world->ModelByName(this->drone_model_name);
 		if( !this->drone ) {
@@ -87,47 +93,51 @@ bool DockSim::attach() {
 			return false;
 			}
 		}
-	
-	RCLCPP_INFO(this->ros_node_->get_logger(), "getting drone base link");
-	auto child_link = this->drone->GetLink("base_link");
-	// auto links1 = this->drone->GetLinks();
 
-	// for(auto a: links1){
-	// 		RCLCPP_INFO(this->ros_node_->get_logger(), a->GetName());
-	// }
-	// if (!child_link){
-	// 	RCLCPP_INFO(this->ros_node_->get_logger(), "child link is none");
-	// }
-	RCLCPP_INFO(this->ros_node_->get_logger(), "getting rover base link");
-	auto parent_link = this->rover->GetLink("turtlebot3_waffle::base_link");
-	auto links = this->rover->GetLinks();
+	// RCLCPP_INFO(this->ros_node_->get_logger(), "getting drone base link");
+	auto child_link = this->drone->GetLink("iris::base_link");
 
-	// for(auto a: links){
-	// 		RCLCPP_INFO(this->ros_node_->get_logger(), a->GetName());
-	// }
-	
-	// if (!parent_link){
-	// 	RCLCPP_INFO(this->ros_node_->get_logger(), "parent link is none");
-	// }
+	if (!child_link){
+		RCLCPP_ERROR(this->ros_node_->get_logger(), "child link from drone is none, here is a list of links");
+		auto links1 = this->drone->GetLinks();
+		for(auto a: links1){
+			RCLCPP_INFO(this->ros_node_->get_logger(), a->GetName());
+		}
+		return false;
+	}
 
-	RCLCPP_INFO(this->ros_node_->get_logger(), "finished");
+	// RCLCPP_INFO(this->ros_node_->get_logger(), "getting payload base link");
+	auto parent_link = this->rover->GetLink("base_link");
+
+	if (!parent_link){
+		RCLCPP_INFO(this->ros_node_->get_logger(), "parent link from payload is none, here is a list of links");
+		auto links = this->rover->GetLinks();
+		for(auto a: links){
+				RCLCPP_INFO(this->ros_node_->get_logger(), a->GetName());
+		}
+		return false;
+	}
 
 	if( this->joint ) {
 		RCLCPP_INFO(this->ros_node_->get_logger(), "Already attached.");
+		if (this->initial_attaching_timer) {
+			RCLCPP_INFO(this->ros_node_->get_logger(), "Initial attach succesful, timer cancelling");
+			this->initial_attaching_timer->cancel();
+		}
 		return true;
 	}
 
 
-
 	// Test if links are within docking tolerance
+	RCLCPP_INFO(this->ros_node_->get_logger(), "Testing tolerance");
 	auto poseOffset = parent_link->WorldPose() - child_link->WorldPose();
-	bool inTolerance = poseOffset.Pos().SquaredLength() < (this->allowable_offset) and poseOffset.Pos().SquaredLength() > 0.08;
+	bool inTolerance = poseOffset.Pos().SquaredLength() < this->allowable_offset;
 
 	if(!inTolerance) {
-		RCLCPP_WARN(this->ros_node_->get_logger(), "Drone not within dock tolerance.");
+		RCLCPP_WARN(this->ros_node_->get_logger(), "Drone not within dock tolerance: %f", poseOffset.Pos().SquaredLength());
 		return false;
-		}
-	
+	}
+
 	RCLCPP_INFO(this->ros_node_->get_logger(), "Creating new joint.");
 	std::stringstream jointName;
 	jointName << "sim_dock_joint_" << jointCounter;
@@ -139,7 +149,7 @@ bool DockSim::attach() {
 	jointCounter++;
 	joint->Load(parent_link,child_link, ignition::math::Pose3d());
 	joint->Init();
-	
+
 	RCLCPP_INFO(this->ros_node_->get_logger(), "Attaching joint");
 	joint->Attach(parent_link,child_link);
 	return true;

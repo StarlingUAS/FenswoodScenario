@@ -7,10 +7,10 @@
         <namespace>attach_vehicle</namespace>
       </ros>
       <!-- Match variables within the controller cpp file -->
-      <drone_model>iris1</drone_model>
+      <drone_model>iris_demo</drone_model>
       <rover_model>sensor_payload</rover_model>
-    </plugin> 
-  
+    </plugin>
+
     <spherical_coordinates>
       <surface_model>EARTH_WGS84</surface_model>
       <latitude_deg>51.4233628</latitude_deg>
@@ -32,42 +32,42 @@
       <pose relative_to="field">2.0 0.0 0.05 0 0 0</pose>
       <static>1</static>
     </include>
-    
+
     <include>
       <uri>model://construction_cone</uri>
       <name>static_cone_2</name>
       <pose relative_to="field">-2.0 0.0 0.05 0 0 0</pose>
       <static>1</static>
     </include>
-    
+
     <include>
       <uri>model://house_1</uri>
       <name>barn</name>
       <pose relative_to="field">20 20 0 0 0 0</pose>
       <static>1</static>
     </include>
-    
+
     <include>
       <uri>model://grass_box</uri>
       <name>grass_flat_near</name>
       <pose relative_to="field">160 -55 0.05 0 0 0</pose>
       <static>1</static>
     </include>
-    
+
     <include>
       <uri>model://grass_box</uri>
       <name>grass_flat_far</name>
       <pose relative_to="field">160 -185 0.05 0 0 0</pose>
       <static>1</static>
     </include>
-    
+
     <include>
       <uri>model://grass_box</uri>
       <name>grass_slope</name>
       <pose relative_to="field">160 -315 13 -0.2 0 0</pose>
       <static>1</static>
     </include>
-      
+
     <include>
       <uri>model://pine_tree</uri>
       <name>tree_1</name>

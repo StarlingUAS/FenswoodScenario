@@ -39,6 +39,8 @@ class DockSim : public WorldPlugin {
 		rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr dockStatusPub;
 		rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr dockControlSub;
 
+		rclcpp::TimerBase::SharedPtr initial_attaching_timer;
+
 		physics::WorldPtr world;
 		physics::PhysicsEnginePtr physics;
 		physics::JointPtr joint;
@@ -48,7 +50,7 @@ class DockSim : public WorldPlugin {
 		physics::ModelPtr drone;
 		physics::ModelPtr rover;
 
-		double allowable_offset = 0.15; 
+		double allowable_offset = 0.15;
 
 		int jointCounter;
 
