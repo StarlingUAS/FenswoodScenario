@@ -27,5 +27,10 @@ nav:
     - "5. Running the Example UAV Controller": "tutorials/running_controller.md"
     - "6. Inspecting and Debugging Starling with Docker and ROS": "tutorials/inspecting.md"
     - "7. Summary and Conclusion": "tutorials/summary.md"
+  - "Fenswood Scenario Repository":
+    - "Repository Overview": "details/repo_layout.md"
+    - "Volcano Target Spawning": "details/target_spawning.md"
+    - "Pick up & Drop off of Payload": "details/attach_detach.md"
+    - "Gimbal Control": "details/gimbal.md"
 
 extra_css: [ kbd.css ]
