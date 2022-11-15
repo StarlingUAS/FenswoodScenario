@@ -15,6 +15,7 @@ It contains the following:
 - Contains a docker-compose file which will automatically build the simulator without needing to build the container yourself manually
 - Contains the documentation for `https://starlinguas.github.io/FenswoodScenario`
 - Contains the `.github` to enable automated builds on github actions.
+- Contains the example controller in `example_controller_python_ap`.
 
 ## World file
 
@@ -45,3 +46,7 @@ The `fenswood/iris.launch.xml` launch file launches both the drone and the paylo
 ## Building
 
 There exists a `Makefile` which should provide automated commands for building and testing the `Dockerfile` simulator for this repository.
+
+## Example controller
+
+The example controller is in the `example_controller_python_ap` folder. This is a Python rosnode put into a local Docker container. The `docker-compose.example_drone_controller.yaml` docker-compose file is used to build and run this controller against the simulator run by `docker-compose.yml`
