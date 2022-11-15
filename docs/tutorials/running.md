@@ -21,14 +21,15 @@ This will download the repository folder into your local directory. Navigate int
 ```console
 myuser@my-machine:~/Documents$ cd FenswoodScenario
 myuser@my-machine:~/Documents/FenswoodScenario$ ls
-README.md                 docker-compose.windows.yml  foxglove_layout.json
-docker-compose.linux.yml  fenswood
+Dockerfile  README.md        docker-compose.example_drone_controller.yaml  docs                          fenswood              mkdocs.yml
+Makefile    docker-bake.hcl  docker-compose.yml                            example_controller_python_ap  foxglove_layout.json  simulation
+
 ```
 
 Then you will need to download the associated starling containers to run the simulator and SITL. Thankfully, this is fairly straightforward and can be run by doing the following:
 ```bash
 myuser@my-machine:~/Documents/FenswoodScenario$ docker-compose -f docker-compose.yml pull
-Pulling simhost         ...
+Pulling simhost         ... done
 Pulling sitl            ...
 Pulling mavros          ...
 Pulling rosbridge-suite ...
@@ -38,14 +39,15 @@ Pulling ui
 Breaking down this command,
 
 - `docker-compose` is a utility which allows us to compose together multiple docker containers, i.e. run multiple containers together.
-- `-f docker-compose.linux.yml` specifies that `docker-compose` should read the configuration yaml file given by `-f`. `docker-compose.yml` is a configuration file we have written which specifies the containers and configurations required to run the fenswood scenario. In this file, we have speciifed that 4 containers will be run.
+- `-f docker-compose.yml` specifies that `docker-compose` should read the configuration yaml file given by `-f`. `docker-compose.yml` is a configuration file we have written which specifies the containers and configurations required to run the fenswood scenario. In this file, we have speciifed that 6 containers will be run.
 - `pull` specifies that we would like to download the required containers locally, but not run them just yet.
 
-> *Note:* if the file is called `docker-compose.yml` or `docker-compose.yaml` the `-f` option does not need to be specified, we are doing it here for completeness. Try it! 
+> *Note:* if the file is called `docker-compose.yml` or `docker-compose.yaml` the `-f` option does not need to be specified, we are doing it here for completeness. Try it: `docker-compose pull`
 
-This command may take between 20 to 30 minutes as it has to download some large content - the simulator itself is around 5Gb! It is recommended you keep reading and have a look at [section 5.4 (a brief introduction to ROS)](#a-brief-introduction-to-ros) while waiting.
+This command may take between 10 minutes as it has to download some large content - the simulator itself is around 5Gb! It is recommended you keep reading and have a look at [section 5.4 (a brief introduction to ROS)](#a-brief-introduction-to-ros) while waiting.
 
 The downloaded containers are not stored in your local directory, instead they are stored by docker in a local library on your own machine. All downloaded and local containers can be seen by typing.
+
 ```console
 myuser@my-machine:~/Documents/FenswoodScenario$ docker images
 ```
@@ -53,8 +55,11 @@ myuser@my-machine:~/Documents/FenswoodScenario$ docker images
 ## Running the Example Scenario
 
 Once the download of `pull` has completed, you can run the scenario. To run the example scenario, it is a similar command except now you ask it to `up`:
+
+> The simulator is build locally, so this may take a few minutes too to download dependencies and such.
+
 ```console
-myuser@my-machine:~/Documents/FenswoodScenario$ docker-compose -f docker-compose.linux.yml up
+myuser@my-machine:~/Documents/FenswoodScenario$ docker-compose up
 ```
 
 This will start 4 containers:
@@ -86,4 +91,4 @@ The full process as a gif:
 
 ![Fenswood Scenario GIF](imgs/starling-fenswood-demo-1.gif)
 
-To stop the simulator from running, select this terminal and press `Ctrl+c`. Pressing once will shutdown the containers gracefully. Pressing twice will attempt to immediately kill all contianers. 
+To stop the simulator from running, select this terminal and press `Ctrl+c`. Pressing once will shutdown the containers gracefully. Pressing twice will attempt to immediately kill all contianers.

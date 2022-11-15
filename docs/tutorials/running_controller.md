@@ -1,53 +1,44 @@
 
 # Running the Example UAV Controller
 
-The next step in getting the Fenswood Scenario up and running is to actually get the UAV to do something. The previous steps simply started the simulator up, but now we have to instruct and control the UAV. For now we have provided an example controller to all students (to be turned into a tutorial at a later date)
-
-**The example controller repository is here: [https://github.com/StarlingUAS/example_python_controller](https://github.com/StarlingUAS/example_python_controller)**
+The next step in getting the Fenswood Scenario up and running is to actually get the UAV to do something. The previous steps simply started the simulator up, but now we have to instruct and control the UAV. For now we have provided an example controller to all students in the same `FenswoodScenario` repository under `example_controller_python_ap`.
 
 This section will take you through step by step as to how to download and run the example, a bit of information about what the example contains. This information is also available in the example repository readme.
-
-## Getting the Example Controller
-
-Similar to the simulator, the example controller is packaged up as a github repository. This repository contains a number of example controllers for use in different scenarios and simulators. There is one particular controller which has been developed for the fenswood scenario.
-
-Again, in order to run the example scenario, you will first need to 'clone' the repository locally. Therefore navigate to a location in the file system where you want to store the repository (e.g. `cd ~/Documents`) and run the following:
-```bash
-git clone https://github.com/StarlingUAS/example_python_controller.git
-cd example_python_controller # Navigate into the folder
-```
-
-Now unlike the simulator, you will not need to download the example from the internet. This example is set up so that it will build itself locally when it is run.
 
 ## Running the Example Controller
 
 First, open up a terminal and start up the Fenswood Scenario Simulator if you haven't already (Refer to [](#running-the-example-scenario)). Double check it is open by going to Gazebo Web at [localhost:8080](http://localhost:8080)
 
-Then, open up a second terminal and navigate to the example_python_controller folder. The example controller can be started by running the following:
-```console
-myuser@my-machine:~/Documents/example_python_controller$ docker-compose -f docker-compose.fenswood.ap.yaml up
-```
-With this command, the controller will start off and attempt to find a drone on the network. 
+Then, **open up a second terminal** and navigate to the FenswoodScenario repository folder. The example controller can be started by running the following:
 
-> If a drone has not been found, try restarting the both the Fenswood Scenario and the controller. 
+```console
+myuser@my-machine:~/Documents/FenswoodScenario$ docker-compose -f docker-compose.example_drone_controller.yaml up
+```
+
+With this command, the controller will start off and attempt to find a drone on the network.
+
+> If a drone has not been found, try restarting the both the Fenswood Scenario and the controller.
 
 Once a drone has been found, it will attempt to connect to the ardupilot. Once connected the path the vehicle will take is initialised and it is ready to fly if the user sends a mission go.
+
+> Be patient, sometimes the ardupilot SITL can be quite slow to respond. Leave it for up to 2 or 3 minutes before trying again.
 
 Now to send a mission go, you can use the provided simple UI that is started with the FenswoodScenario. Navigate to [localhost:3000](http://localhost:3000) in the browser, and a UI will start up:
 
 ![Starling UI](imgs/ui.png)
 
-If it says `connected to rosbridge` in green, then you are ready to send a mission start command. Press the Green GO Button. 
+If it says `connected to rosbridge` in green, then you are ready to send a mission start command. Press the Green GO Button.
 
 If you go to the terminal it should start sending waypoints. In the UI the camera image should start to change as the vehicle takes off, and you should see the vehicle takeoff in gazebo web as well.
 
 Then you should hopefully see its attempt to follow a preset trajectory towards the target location.
 
-This full process can be seen in the following gif:
+This full process can be seen in the following gif (The commands are outdated, but you should see something very similar):
 ![Fenswood Example Controller demo a](imgs/starling-fenswood-demo-2a.gif)
 
 The landing:
 ![Fenswood Example Controller demo a](imgs/starling-fenswood-demo-2b.gif)
+
 ## What is the Example Controller
 
 So what exactly is the example controller doing?
