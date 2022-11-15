@@ -2,15 +2,13 @@ version: '3'
 
 services:
   simhost:
-    image: uobflightlabstarling/starling-sim-iris-ap:${STARLING_RELEASE:-latest}
+    # image: uobflightlabstarling/starling-sim-iris-ap:${STARLING_RELEASE:-latest}
+    build: .
     environment:
       - AP_SITL_HOST=sitl
       # - SPAWN_TARGET_RANDOM_SEED=22
       - SPAWN_TARGET_GEN_BETWEEN_TARGET_LOC_ANGLE_MAX=8
       - SPAWN_TARGET_GEN_HOTSPOT_ANGLE_VARIANCE=0.5
-    volumes:
-      - ./fenswood:/ros.env.d/fenswood
-    command: ["ros2", "launch", "/ros.env.d/fenswood/iris.launch.xml"]
     ports:
       - "8080:8080"
 

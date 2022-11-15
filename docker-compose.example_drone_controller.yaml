@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  controller:
+    build: ./example_controller_python_ap/
+    command: ["ros2", "launch", "example_controller_python", "fenswood_example.launch.py"]
+
+
+networks:
+  default:
+    external: true
+    name: ${STARLING_NETWORK:-fenswoodscenario_default}
