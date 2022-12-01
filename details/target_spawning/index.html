@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Volcano Target Spawning - Fenswood Scenario</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "Volcano Target Spawning";
+        var mkdocs_page_input_path = "details/target_spawning.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Fenswood Scenario
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/intro_to_linux/">1. A Brief Introduction to Linux</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/starling_docker/">2. Starling and Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/running/">3. Running the Example Fenswood Scenario</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/intro_to_ros/">4. A Brief Introduction to ROS</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/running_controller/">5. Running the Example UAV Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/inspecting/">6. Inspecting and Debugging Starling with Docker and ROS</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/summary/">7. Summary and Conclusion</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Fenswood Scenario Repository</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../building_from_source/">Building From Source</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../repo_layout/">Repository Overview</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Volcano Target Spawning</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#spawning-algorithm">10.1 Spawning Algorithm</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#spawning-environment-variable-options">10.2 Spawning Environment Variable Options</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-variables">10.3 Setting variables</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../attach_detach/">Pick up &amp; Drop off of Payload</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../gimbal/">Gimbal Control</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Fenswood Scenario</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Fenswood Scenario Repository »</li>
+<li>Volcano Target Spawning</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/StarlingUAS/FenswoodScenario/edit/master/docs/details/target_spawning.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="target-spawning"><span class="enumerate-headings-plugin enumerate-heading-plugin">10.</span> Target Spawning<a class="headerlink" href="#target-spawning" title="Permanent link">¶</a></h1>
+<p>For the purpose of the project, a volcano has to be modelled with dynamic areas representing danger around the base.
+Target spawning is achieved via the <code>spawn_target.py</code> script. It spawns a specified number or yellow target rectangles and red hotspot circles around the 'annulus' of a volcano.</p>
+<ol>
+<li>The Yellow Target Rectangles represent areas of dangerous terrain where landing would be unsafe (pyroclastic flows etc)</li>
+<li>The Red Hotspot Circles represent areas of no-flight which would be dangerous (geysers, gas vents etc)</li>
+</ol>
+<h2 id="spawning-algorithm"><span class="enumerate-headings-plugin enumerate-heading-plugin">10.1</span> Spawning Algorithm<a class="headerlink" href="#spawning-algorithm" title="Permanent link">¶</a></h2>
+<p>There has to be an element of randomness in the spawning. Since the annulus is modelled as a circle, the placement of targets is based on the radial angle theta, on the edge of the annulus. In addition the hotspots should be clustered around each yellow target either on or near them. Here is the process:</p>
+<ol>
+<li>For each primary target, an angle theta is selected uniformly. For each additional target, random thetas are drawn which satisfy a minimal angle between existing targets (first valid theta chosen).</li>
+<li>The hotspot locations are then drawn from a normal distribution with a given variance around the targets angle and radial distances to force clustering. Hotspot locations are drawn until valid hotspots which are sufficiently far from each other are found.</li>
+<li>These locations are then dynamically generated into an sdf XML representing the volcano.</li>
+</ol>
+<h2 id="spawning-environment-variable-options"><span class="enumerate-headings-plugin enumerate-heading-plugin">10.2</span> Spawning Environment Variable Options<a class="headerlink" href="#spawning-environment-variable-options" title="Permanent link">¶</a></h2>
+<p>The primary options are given by the following:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SPAWN_TARGET_NUM_TARGETS</td>
+<td>2</td>
+<td>Number of Yellow Targets being spawned</td>
+</tr>
+<tr>
+<td>SPAWN_TARGET_NUM_HOTSPOTS</td>
+<td>5</td>
+<td>Number of Red Targets being spawned</td>
+</tr>
+<tr>
+<td>SPAWN_TARGET_HOTSPOT_RADIUS</td>
+<td>3</td>
+<td>Radius of Red circular hotspots</td>
+</tr>
+<tr>
+<td>SPAWN_TARGET_TARGET_LENGTH</td>
+<td>20</td>
+<td>Length of yellow target</td>
+</tr>
+<tr>
+<td>SPAWN_TARGET_TARGET_WIDTH</td>
+<td>5</td>
+<td>Width of yellow target</td>
+</tr>
+<tr>
+<td>SPAWN_TARGET_RANDOM_SEED</td>
+<td>None</td>
+<td>Random seed for random generation, used for deterministic arrangements.</td>
+</tr>
+<tr>
+<td>SPAWN_TARGET_FILE_PATH</td>
+<td>""</td>
+<td>File Path to fixed spawn, see example file i 'fenswood/target/default_target.json'</td>
+</tr>
+</tbody>
+</table>
+<p>Change Size and Location of Volcano Annulus (Calculated from GPS positions):</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SPAWN_TARGET_ANNULUS_RADIUS</td>
+<td>40</td>
+<td>Radius of Volcano</td>
+</tr>
+<tr>
+<td>SPAWN_TARGET_ANNULUS_LOC_X</td>
+<td>-195</td>
+<td>Location Relative to Spawn/Takeoff Location</td>
+</tr>
+<tr>
+<td>SPAWN_TARGET_ANNULUS_LOC_Y</td>
+<td>-163</td>
+<td>Location Relative to Spawn/Takeoff Location</td>
+</tr>
+<tr>
+<td>SPAWN_TARGET_ANNULUS_LOC_Z</td>
+<td>0.1</td>
+<td>Location Relative to Spawn/Takeoff Location</td>
+</tr>
+</tbody>
+</table>
+<p>Change Random Spawn Parameters</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SPAWN_TARGET_GEN_TARGET_LOC_ANGLE_MIN</td>
+<td>-pi/2</td>
+<td>Target location generationg minimum angle</td>
+</tr>
+<tr>
+<td>SPAWN_TARGET_GEN_TARGET_LOC_ANGLE_MAX</td>
+<td>pi/2</td>
+<td>Target location generation maximum angle</td>
+</tr>
+<tr>
+<td>SPAWN_TARGET_GEN_HOTSPOT_ANGLE_VARIANCE</td>
+<td>0.3</td>
+<td>Hotspot sampling normal variance for angle variation relative to target centers</td>
+</tr>
+<tr>
+<td>SPAWN_TARGET_GEN_HOTSPOT_RADIUS_VARIANCE</td>
+<td>0.5</td>
+<td>Hotspot sampling normal variance for radial variation relative to target centers</td>
+</tr>
+<tr>
+<td>SPAWN_TARGET_GEN_BETWEEN_TARGET_LOC_ANGLE_MIN</td>
+<td>pi/3</td>
+<td>Minimal angle targets</td>
+</tr>
+<tr>
+<td>SPAWN_TARGET_GEN_BETWEEN_TARGET_LOC_ANGLE_MAX</td>
+<td>4</td>
+<td>Maximal distance between hotspots</td>
+</tr>
+</tbody>
+</table>
+<p>Note that if minimal angle and maximal distance are set incorrectly, it may cause an indefinite sampling as valid samples cannot be generated.</p>
+<h2 id="setting-variables"><span class="enumerate-headings-plugin enumerate-heading-plugin">10.3</span> Setting variables<a class="headerlink" href="#setting-variables" title="Permanent link">¶</a></h2>
+<p>The variables can be set in the usual manner either in the docker run comamnd or in the docker-compose file. For example, you can create a new docker-compose file that is the same as the current one with the following modification to the <code>simhost</code> container:</p>
+<pre><code class="language-yaml">  simhost:
+    image: uobflightlabstarling/starling-sim-iris-ap:${STARLING_RELEASE:-latest}
+    environment:
+      - AP_SITL_HOST=sitl
+      - SPAWN_TARGET_RANDOM_SEED=22 # &lt;- This specifies a random seed
+      - SPAWN_TARGET_GEN_BETWEEN_TARGET_LOC_ANGLE_MAX=8
+      - SPAWN_TARGET_GEN_HOTSPOT_ANGLE_VARIANCE=0.5
+    volumes:
+      - ./fenswood:/ros.env.d/fenswood
+    command: ["ros2", "launch", "/ros.env.d/fenswood/iris.launch.xml"]
+    ports:
+      - "8080:8080"
+</code></pre>
+<p>With the Makefile commands, these can be run like so</p>
+<pre><code class="language-bash">make run ENV="-e SPAWN_TARGET_RANDOM_SEED=22"
+</code></pre>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../repo_layout/" title="Repository Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../attach_detach/" title="Pick up &amp; Drop off of Payload">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2022 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/StarlingUAS/FenswoodScenario" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../repo_layout/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../attach_detach/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

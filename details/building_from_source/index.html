@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Building From Source - Fenswood Scenario</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "Building From Source";
+        var mkdocs_page_input_path = "details/building_from_source.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Fenswood Scenario
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/intro_to_linux/">1. A Brief Introduction to Linux</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/starling_docker/">2. Starling and Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/running/">3. Running the Example Fenswood Scenario</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/intro_to_ros/">4. A Brief Introduction to ROS</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/running_controller/">5. Running the Example UAV Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/inspecting/">6. Inspecting and Debugging Starling with Docker and ROS</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/summary/">7. Summary and Conclusion</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Fenswood Scenario Repository</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Building From Source</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#the-system">8.1 The System</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-system">8.2 Building The System</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#building-the-core-functionality">8.2.1 Building the core functionality</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#building-the-fenswood-scenario">8.2.2 Building the Fenswood Scenario</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../repo_layout/">Repository Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../target_spawning/">Volcano Target Spawning</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../attach_detach/">Pick up &amp; Drop off of Payload</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../gimbal/">Gimbal Control</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Fenswood Scenario</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Fenswood Scenario Repository »</li>
+<li>Building From Source</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/StarlingUAS/FenswoodScenario/edit/master/docs/details/building_from_source.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="building-fenswood-scenario-and-the-simulator-stack-from-source"><span class="enumerate-headings-plugin enumerate-heading-plugin">8.</span> Building Fenswood Scenario and the Simulator Stack from Source<a class="headerlink" href="#building-fenswood-scenario-and-the-simulator-stack-from-source" title="Permanent link">¶</a></h1>
+<p>This tutorial takes the reader through how to build the simulator stack and the necessary requirements for the Fenswood Project scenario from source. </p>
+<p><strong>THIS IS RECOMMENDED FOR THOSE RUNNING ON ARM64 ARCHITECTURES</strong> </p>
+<p>This includes the new Mac models running M1 chipsets. </p>
+<div class="toc">
+<ul>
+<li><a href="#building-fenswood-scenario-and-the-simulator-stack-from-source">8. Building Fenswood Scenario and the Simulator Stack from Source</a><ul>
+<li><a href="#the-system">8.1 The System</a></li>
+<li><a href="#building-the-system">8.2 Building The System</a><ul>
+<li><a href="#building-the-core-functionality">8.2.1 Building the core functionality</a></li>
+<li><a href="#building-the-fenswood-scenario">8.2.2 Building the Fenswood Scenario</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="the-system"><span class="enumerate-headings-plugin enumerate-heading-plugin">8.1</span> The System<a class="headerlink" href="#the-system" title="Permanent link">¶</a></h2>
+<p>This repository builds upon the ProjectStarling set of containers and therefore requires the following containers to be built</p>
+<ol>
+<li>Ardupilot core gazebo simulator (<code>uobflightlabstarling/starling-sim-iris-ap</code>)</li>
+<li>Ardupilot SITL (<code>uobflightlabstarling/starling-sim-ardupilot-copter</code>)</li>
+<li>Mavros (<code>uobflightlabstarling/starling-mavros</code>)</li>
+<li>Rosbridge Suite (<code>uobflightlabstarling/rosbridge-suite</code>)</li>
+<li>Controller Base (<code>uobflightlabstarling/starling-controller-base</code>)</li>
+<li>FenswoodScenario simulator (<code>uobflightlabstarling/starling-sim-iris-ap</code>) which is built upon (1)</li>
+</ol>
+<blockquote>
+<p><strong>Warning</strong> These containers are all fairly extensive, so some may take quite a while to build. </p>
+<p><strong>Note:</strong> All of these by default will be built with the tag <code>latest</code>, i.e. <code>uobflightlabstarling/starling-mavros:latest</code>. This may or may not align with the docker-compose files so please check if errors occur!  </p>
+</blockquote>
+<h2 id="building-the-system"><span class="enumerate-headings-plugin enumerate-heading-plugin">8.2</span> Building The System<a class="headerlink" href="#building-the-system" title="Permanent link">¶</a></h2>
+<h3 id="building-the-core-functionality"><span class="enumerate-headings-plugin enumerate-heading-plugin">8.2.1</span> Building the core functionality<a class="headerlink" href="#building-the-core-functionality" title="Permanent link">¶</a></h3>
+<p>The core functionality is all in the Project Starling Repository: <a href="https://github.com/StarlingUAS/ProjectStarling">https://github.com/StarlingUAS/ProjectStarling</a>. </p>
+<p>In your workspace, first clone and navigate into the repository:</p>
+<pre><code class="language-bash">git clone --depth=1 https://github.com/StarlingUAS/ProjectStarling.git
+cd ProjectStarling
+</code></pre>
+<p>Then lets first build the simulation containers (1 and 2). These can be built using a Makefile in the simulator directory.</p>
+<pre><code class="language-bash">cd simulator
+make iris-ap
+</code></pre>
+<blockquote>
+<p>A <code>Makefile</code> is an easy to use format which describes simple commands which can be run using the <code>make</code> comamnd. Here we use it to simplify running the commands to build our system. </p>
+</blockquote>
+<p>Once the simulator has been built, we can then build the system components (3, 4, and 5). These can be built using a Makefile in the system directory</p>
+<pre><code class="language-bash">cd system
+make mavros
+make controller-base
+make rosbridge-suite
+</code></pre>
+<h3 id="building-the-fenswood-scenario"><span class="enumerate-headings-plugin enumerate-heading-plugin">8.2.2</span> Building the Fenswood Scenario<a class="headerlink" href="#building-the-fenswood-scenario" title="Permanent link">¶</a></h3>
+<p>The Fenswood Scenario container in this repository is built on top of the Ardupilot core gazebo simulator (<code>uobflightlabstarling/starling-sim-iris-ap</code>) container we built earlier. Therefore we must make sure we have built it before we continue. </p>
+<p>Now you can navigate into the FenswoodScenario repository. If you have not yet cloned the repository, please clone it in your local workspace (outside of ProjectStarling).</p>
+<pre><code class="language-bash">git clone --depth=1 https://github.com/StarlingUAS/FenswoodScenario.git
+cd FenswoodScenario
+make
+</code></pre>
+<p>The make command above will automatically find the arduipilot core simulator we built previously and include the new parts which make it into the FenswoodScenario simulator. </p>
+<p>The simulator should now be ready to use during this tutorial, and during the fenswood volcano templates tutorials. </p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../../tutorials/summary/" title="7. Summary and Conclusion"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../repo_layout/" title="Repository Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2022 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/StarlingUAS/FenswoodScenario" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../../tutorials/summary/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../repo_layout/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

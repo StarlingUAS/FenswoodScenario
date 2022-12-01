@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="Fenswood Scenario Simulation" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Fenswood Scenario</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="kbd.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Fenswood Farm";
+        var mkdocs_page_input_path = "README.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> Fenswood Scenario
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="tutorials/intro_to_linux/">1. A Brief Introduction to Linux</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="tutorials/starling_docker/">2. Starling and Docker</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="tutorials/running/">3. Running the Example Fenswood Scenario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="tutorials/intro_to_ros/">4. A Brief Introduction to ROS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="tutorials/running_controller/">5. Running the Example UAV Controller</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="tutorials/inspecting/">6. Inspecting and Debugging Starling with Docker and ROS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="tutorials/summary/">7. Summary and Conclusion</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Fenswood Scenario Repository</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="details/building_from_source/">Building From Source</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="details/repo_layout/">Repository Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="details/target_spawning/">Volcano Target Spawning</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="details/attach_detach/">Pick up & Drop off of Payload</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="details/gimbal/">Gimbal Control</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">Fenswood Scenario</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Fenswood Farm</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/StarlingUAS/FenswoodScenario/edit/master/docs/README.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="fenswood-farm">Fenswood Farm<a class="headerlink" href="#fenswood-farm" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>This repository provides a tutorial, template and overview for running the Fenswood Scenario in detail. It will take the student through the basics of Linux, Ros and Docker to hopefully run and edit the Fenswood Scenario simulation environment, followed by developing a simple controller to hopefully fly a drone! </p>
+<p>This tutorial is split into two parts.</p>
+<ol>
+<li>Basics of Linux, ROS and Docker on this site (starting here):<ul>
+<li><a href="https://starlinguas.github.io/FenswoodScenario/tutorials/fenswood_scenario/tutorials/intro_to_linux">https://starlinguas.github.io/FenswoodScenario/tutorials/fenswood_scenario/</a></li>
+</ul>
+</li>
+<li>Fenswood Volcano Template Tutorials where you will learn how to create and build your controller<ul>
+<li><a href="https://starlinguas.github.io/fenswood_volcano_template/">https://starlinguas.github.io/fenswood_volcano_template/</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="how-to-use-this-tutorial">How to use this Tutorial<a class="headerlink" href="#how-to-use-this-tutorial" title="Permanent link">&para;</a></h2>
+<p>This Tutorial aims to give an introductory overview of the Starling system through the use of the Fenswood Scenario example. It will take a student from the basics of Linux, ROS and Docker to hopefully being able to run the Fenswood Scenario simulation environment with a simple controller flying the drone.</p>
+<p>Simply follow along and try and consider what each command is doing. </p>
+<p>This tutorial was written for the University of Bristol Aerial MSc Group Project 2021.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 University of Bristol Flight Laboratory</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/StarlingUAS/FenswoodScenario" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.4.2
+Build Date UTC : 2022-12-01 14:24:08.202409+00:00
+-->

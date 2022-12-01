@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>6. Inspecting and Debugging Starling with Docker and ROS - Fenswood Scenario</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "6. Inspecting and Debugging Starling with Docker and ROS";
+        var mkdocs_page_input_path = "tutorials/inspecting.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Fenswood Scenario
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro_to_linux/">1. A Brief Introduction to Linux</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../starling_docker/">2. Starling and Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../running/">3. Running the Example Fenswood Scenario</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../intro_to_ros/">4. A Brief Introduction to ROS</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../running_controller/">5. Running the Example UAV Controller</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">6. Inspecting and Debugging Starling with Docker and ROS</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#inspecting-docker">6.1 Inspecting Docker</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#inspecting-ros2">6.2 Inspecting ROS2</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../summary/">7. Summary and Conclusion</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Fenswood Scenario Repository</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/building_from_source/">Building From Source</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/repo_layout/">Repository Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/target_spawning/">Volcano Target Spawning</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/attach_detach/">Pick up &amp; Drop off of Payload</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/gimbal/">Gimbal Control</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Fenswood Scenario</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Tutorials »</li>
+<li>6. Inspecting and Debugging Starling with Docker and ROS</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/StarlingUAS/FenswoodScenario/edit/master/docs/tutorials/inspecting.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="inspecting-and-debugging-starling-with-docker-and-ros"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.</span> Inspecting and Debugging Starling with Docker and ROS<a class="headerlink" href="#inspecting-and-debugging-starling-with-docker-and-ros" title="Permanent link">¶</a></h1>
+<p>Now we have the full example Fenswood Scenario running, we can start to inspect what's going on a bit more! This will be more useful when developing your own controller, but this will give you an idea of whether your systems are working or not.</p>
+<h2 id="inspecting-docker"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.1</span> Inspecting Docker<a class="headerlink" href="#inspecting-docker" title="Permanent link">¶</a></h2>
+<p>As you will hopefully be aware now, there's a fair amount going on under the hood! Because of all of these pieces which need to fit together, occasionally things fail, and therefore you will need to be able to inspect whats going on.</p>
+<p>As most of Starling relys on using <strong>Docker</strong> we can use some of the docker commands to inspect what is going on!</p>
+<p>It is useful to know what docker containers exist locally on your system and whether they are the most recent release. The following command will list your local docker containers images and when they were last released</p>
+<pre><code class="language-console">myuser@my-machine:~$ docker images
+uobflightlabstarling/starling-sim-iris-ap                                     latest    02ba82372286   6 weeks ago   5.07GB
+uobflightlabstarling/starling-sim-iris                                        &lt;none&gt;    826dab23768b   6 weeks ago   5.84GB
+uobflightlabstarling/starling-sim-ardupilot-gazebo                            latest    df39b5d0181e   6 weeks ago   5.05GB
+uobflightlabstarling/starling-sim-ardupilot-copter                            &lt;none&gt;    6a10c0c95714   6 weeks ago   2.35GB
+uobflightlabstarling/starling-mavros                                          &lt;none&gt;    3a5142abfc0c   6 weeks ago   2.04GB
+uobflightlabstarling/rosbridge-suite                                          latest    97a05ece1aa3   6 weeks ago   887MB
+uobflightlabstarling/starling-ui-example                                      latest    83e9a37ddbdf   6 weeks ago   1.33GB
+</code></pre>
+<p>To see what containers are running, you can use the following. When running Fenswood you should see 5 containers running.</p>
+<pre><code class="language-console">myuser@my-machine:~$ docker ps
+CONTAINER ID   IMAGE                                                       COMMAND                  CREATED       STATUS         PORTS     NAMES
+dfea0bbf9b69   uobflightlabstarling/starling-ui-example                    "/ros_entrypoint.sh …"   3 hours ago   Up 9 minutes             fenswoodscenario_ui-example_1
+1b72f667a557   uobflightlabstarling/starling-mavros:latest                 "/ros_entrypoint.sh …"   3 hours ago   Up 9 minutes             fenswoodscenario_mavros_1
+9d55eb4de60e   uobflightlabstarling/rosbridge-suite:latest                 "/ros_entrypoint.sh …"   3 hours ago   Up 9 minutes             fenswoodscenario_rosbridge-suite_1
+5205bcf5495f   example_python_controller_controller                        "/ros_entrypoint.sh …"   3 weeks ago   Up 8 minutes             example_python_controller_controller_1
+9fa66d47e21e   uobflightlabstarling/starling-sim-ardupilot-copter:latest   "/home/root/entrypoi…"   4 weeks ago   Up 9 minutes             fenswoodscenario_sitl_1
+e5e47cc36ec1   uobflightlabstarling/starling-sim-iris-ap:latest            "/ros_entrypoint.sh …"   5 weeks ago   Up 9 minutes             fenswoodscenario_simhost_1
+</code></pre>
+<p>When running docker ps, it shows some useful information. You can use this information to inspect the inside of a container. Now what do we mean by the 'inside of a container'. Essentially the container allows us to run a pre-set set of instructions inside a blank mini version of linux. When we are debugging, it is sometimes really useful to have a look at what is going on inside this mini version of linux!</p>
+<p>The <code>exec</code> command allows us to go inside one of these containers to make changes directly. Note that when we are inside, we are no longer in your own version of the desktop, and that changes made are persistent inside the container! When inside the container, you can run some of the ROS2 comamnds in the next section.</p>
+<pre><code>docker exec -it &lt;container id&gt; bash
+</code></pre>
+<p>e.g.</p>
+<pre><code class="language-console">myuser@my-machine:~$ docker exec -it 1b72f667a557 bash
+root@my-machine:/ros_ws# 
+</code></pre>
+<p>If a particular docker container is not working properly, you can also kill a container:</p>
+<pre><code>docker kill &lt;container id&gt;
+</code></pre>
+<h2 id="inspecting-ros2"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.2</span> Inspecting ROS2<a class="headerlink" href="#inspecting-ros2" title="Permanent link">¶</a></h2>
+<p>As mentioned before, everything in starling is running ROS2. Therefore all of the ROS2 nodes, topics and services can be inspected and observed. We can do this inspection using the following few commands.</p>
+<p>First ensure that you have <code>docker exec</code> into any of the containers. For example using the container id of the container labelled <code>starling-mavros</code>.</p>
+<p>Once you are inside, you first need to run the following to enable ROS2 commands. (<kbd class="keys"><kbd class="key-tab">Tab</kbd></kbd> autocompleting is available)</p>
+<pre><code>root@my-machine:~$ source /opt/ros/foxy/setup.bash
+</code></pre>
+<p>The first thing you can do is list all of the ROS2 nodes in the network <code>node</code> command:</p>
+<pre><code>root@my-machine:~$ ros2 node list
+WARNING: Be aware that are nodes in the graph that share an exact name, this can have unintended side effects.
+/gazebo
+/rosapi
+/rosapi
+/rosbridge_websocket
+/vehicle_1/camera_controller
+/vehicle_1/example_controller
+/vehicle_1/gimbal_small_2d
+/vehicle_1/ros_bridge
+</code></pre>
+<p>This will show a list of all the nodes that ROS2 can find. You should see all of the nodes from the simulator and the example controller.</p>
+<p>Then, we can inspect the list of available topics using the <code>topic</code> command.</p>
+<pre><code class="language-console">root@my-machine:~$ ros2 topic list
+/client_count
+/clock
+/connected_clients
+/emergency_stop
+/mission_start
+/parameter_events
+/performance_metrics
+/rosout
+/vehicle_1/camera/camera_info
+/vehicle_1/camera/image_raw
+/vehicle_1/camera/image_raw/compressed
+/vehicle_1/camera/image_raw/compressedDepth
+/vehicle_1/camera/image_raw/theora
+/vehicle_1/gimbal_tilt_cmd
+/vehicle_1/gimbal_tilt_status
+/vehicle_1/mavlink/from
+/vehicle_1/mavlink/to
+/vehicle_1/mavros/battery
+/vehicle_1/mavros/distance_sensor/hrlv_ez4_sonar
+/vehicle_1/mavros/distance_sensor/lidarlite_laser
+/vehicle_1/mavros/distance_sensor/rangefinder
+/vehicle_1/mavros/distance_sensor/temperature
+/vehicle_1/mavros/global_position/global
+/vehicle_1/mavros/global_position/velocity
+/vehicle_1/mavros/image/camera_image
+/vehicle_1/mavros/local_position/pose
+/vehicle_1/mavros/manual_control/control
+/vehicle_1/mavros/manual_control/send
+/vehicle_1/mavros/mission/reached
+/vehicle_1/mavros/mission/waypoints
+/vehicle_1/mavros/px4flow/ground_distance
+/vehicle_1/mavros/px4flow/raw/optical_flow_rad
+/vehicle_1/mavros/safety_area
+/vehicle_1/mavros/setpoint_accel/accel
+/vehicle_1/mavros/setpoint_attitude/attitude
+/vehicle_1/mavros/setpoint_attitude/cmd_vel
+/vehicle_1/mavros/setpoint_attitude/thrust
+/vehicle_1/mavros/setpoint_position/global
+/vehicle_1/mavros/setpoint_position/global_to_local
+/vehicle_1/mavros/setpoint_position/local
+/vehicle_1/mavros/setpoint_raw/attitude
+/vehicle_1/mavros/setpoint_raw/global
+/vehicle_1/mavros/setpoint_raw/local
+/vehicle_1/mavros/setpoint_velocity/cmd_vel_unstamped
+/vehicle_1/mavros/state
+/vehicle_1/mavros/vision_pose/pose
+/vehicle_1/mavros/vision_pose/pose_cov
+/vehicle_1/mavros/vision_speed/speed_twist
+/vehicle_1/mavros/vision_speed/speed_vector
+</code></pre>
+<p>If there is a particular topic you want to inspect, you can use the <code>echo</code> command of <code>topic</code>, for example if we wanted to inspect the topic <code>/vehicle_1/mavros/state</code> we can run:</p>
+<pre><code>root@my-machine:~$ ros2 topic echo /vehicle_1/mavros/state
+header:
+  stamp:
+    sec: 1639423734
+    nanosec: 393874329
+  frame_id: ''
+connected: true
+armed: false
+guided: true
+manual_input: true
+mode: GUIDED
+system_status: 3
+---
+header:
+  stamp:
+    sec: 1639423735
+    nanosec: 435107761
+  frame_id: ''
+connected: true
+armed: false
+guided: true
+manual_input: true
+mode: GUIDED
+system_status: 3
+---
+^C
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> Press <kbd class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-c">C</kbd></kbd> to stop the echo stream</p>
+</blockquote>
+<p>This should (assuming the connection to all of the other elements is working) start printing out the current state of the drone. Including whether it is armed or not, and which mode it is currently in.</p>
+<p>Finally, you can also inspect the services on the network using the <code>service</code> command like the following:</p>
+<pre><code>root@my-machine:~$ ros2 service list
+...
+/unpause_physics
+/vehicle_1/camera_controller/describe_parameters
+/vehicle_1/camera_controller/get_parameter_types
+/vehicle_1/camera_controller/get_parameters
+/vehicle_1/camera_controller/list_parameters
+/vehicle_1/camera_controller/set_parameters
+/vehicle_1/camera_controller/set_parameters_atomically
+/vehicle_1/example_controller/describe_parameters
+/vehicle_1/example_controller/get_parameter_types
+/vehicle_1/example_controller/get_parameters
+/vehicle_1/example_controller/list_parameters
+/vehicle_1/example_controller/set_parameters
+/vehicle_1/example_controller/set_parameters_atomically
+/vehicle_1/gimbal_small_2d/describe_parameters
+/vehicle_1/gimbal_small_2d/get_parameter_types
+/vehicle_1/gimbal_small_2d/get_parameters
+/vehicle_1/gimbal_small_2d/list_parameters
+/vehicle_1/gimbal_small_2d/set_parameters
+/vehicle_1/gimbal_small_2d/set_parameters_atomically
+/vehicle_1/mavros/cmd/arming
+/vehicle_1/mavros/cmd/command
+/vehicle_1/mavros/cmd/command_int
+/vehicle_1/mavros/cmd/land
+/vehicle_1/mavros/cmd/set_home
+/vehicle_1/mavros/cmd/takeoff
+/vehicle_1/mavros/cmd/trigger_control
+/vehicle_1/mavros/mission/clear
+/vehicle_1/mavros/mission/pull
+/vehicle_1/mavros/mission/push
+/vehicle_1/mavros/mission/set_current
+/vehicle_1/mavros/set_mode
+/vehicle_1/mavros/set_stream_rate
+/vehicle_1/ros_bridge/describe_parameters
+/vehicle_1/ros_bridge/get_parameter_types
+/vehicle_1/ros_bridge/get_parameters
+/vehicle_1/ros_bridge/list_parameters
+/vehicle_1/ros_bridge/set_parameters
+/vehicle_1/ros_bridge/set_parameters_atomically
+/vehicle_1/set_camera_info
+</code></pre>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../running_controller/" title="5. Running the Example UAV Controller"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../summary/" title="7. Summary and Conclusion">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2022 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/StarlingUAS/FenswoodScenario" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../running_controller/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../summary/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>3. Running the Example Fenswood Scenario - Fenswood Scenario</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "3. Running the Example Fenswood Scenario";
+        var mkdocs_page_input_path = "tutorials/running.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Fenswood Scenario
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro_to_linux/">1. A Brief Introduction to Linux</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../starling_docker/">2. Starling and Docker</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">3. Running the Example Fenswood Scenario</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#getting-the-example-scenario">3.1 Getting the Example Scenario</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-example-scenario">3.2 Running the Example Scenario</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../intro_to_ros/">4. A Brief Introduction to ROS</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../running_controller/">5. Running the Example UAV Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../inspecting/">6. Inspecting and Debugging Starling with Docker and ROS</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../summary/">7. Summary and Conclusion</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Fenswood Scenario Repository</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/building_from_source/">Building From Source</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/repo_layout/">Repository Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/target_spawning/">Volcano Target Spawning</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/attach_detach/">Pick up &amp; Drop off of Payload</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/gimbal/">Gimbal Control</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Fenswood Scenario</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Tutorials »</li>
+<li>3. Running the Example Fenswood Scenario</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/StarlingUAS/FenswoodScenario/edit/master/docs/tutorials/running.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="running-the-example-fenswood-scenario"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.</span> Running the Example Fenswood Scenario<a class="headerlink" href="#running-the-example-fenswood-scenario" title="Permanent link">¶</a></h1>
+<p>This year, the group project revolves around the flight of a single UAV to a 'volcano' at Fenswood Farm. Therefore we have provided this fenswood scenario to all students.</p>
+<p><strong>The fenswood scenario repository is here: <a href="https://github.com/StarlingUAS/FenswoodScenario">https://github.com/StarlingUAS/FenswoodScenario</a></strong></p>
+<p>This section takes you through step by step as to how to download and run the example, and a bit of information as to what the example contains. This information is also in the example repository README.</p>
+<h2 id="getting-the-example-scenario"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.1</span> Getting the Example Scenario<a class="headerlink" href="#getting-the-example-scenario" title="Permanent link">¶</a></h2>
+<p>The example is packaged as github repository. For information on what is github see <a href="https://www.howtogeek.com/180167/htg-explains-what-is-github-and-what-do-geeks-use-it-for/">this article</a>.</p>
+<p>In order to run the example scenario, you will first need to 'clone' the repository locally. Therefore, navigate to a location in the file system where you want to store the repository (e.g. <code>cd ~/Documents</code>) and run the following:</p>
+<pre><code class="language-bash">git clone https://github.com/StarlingUAS/FenswoodScenario.git
+</code></pre>
+<blockquote>
+<p><em>Note</em>: this is why we needed to install <code>git</code> earlier using <code>apt</code></p>
+</blockquote>
+<p>This will download the repository folder into your local directory. Navigate into the folder using <code>cd</code>:</p>
+<pre><code class="language-console">myuser@my-machine:~/Documents$ cd FenswoodScenario
+myuser@my-machine:~/Documents/FenswoodScenario$ ls
+Dockerfile  README.md        docker-compose.example_drone_controller.yaml  docs                          fenswood              mkdocs.yml
+Makefile    docker-bake.hcl  docker-compose.yml                            example_controller_python_ap  foxglove_layout.json  simulation
+
+</code></pre>
+<p>Then you will need to download the associated starling containers to run the simulator and SITL. Thankfully, this is fairly straightforward and can be run by doing the following:</p>
+<pre><code class="language-bash">myuser@my-machine:~/Documents/FenswoodScenario$ docker-compose -f docker-compose.yml pull
+Pulling simhost         ... done
+Pulling sitl            ...
+Pulling mavros          ...
+Pulling rosbridge-suite ...
+Pulling ui
+</code></pre>
+<p>Breaking down this command,</p>
+<ul>
+<li><code>docker-compose</code> is a utility which allows us to compose together multiple docker containers, i.e. run multiple containers together.</li>
+<li><code>-f docker-compose.yml</code> specifies that <code>docker-compose</code> should read the configuration yaml file given by <code>-f</code>. <code>docker-compose.yml</code> is a configuration file we have written which specifies the containers and configurations required to run the fenswood scenario. In this file, we have speciifed that 6 containers will be run.</li>
+<li><code>pull</code> specifies that we would like to download the required containers locally, but not run them just yet.</li>
+</ul>
+<blockquote>
+<p><em>Note:</em> if the file is called <code>docker-compose.yml</code> or <code>docker-compose.yaml</code> the <code>-f</code> option does not need to be specified, we are doing it here for completeness. Try it: <code>docker-compose pull</code></p>
+</blockquote>
+<p>This command may take between 10 minutes as it has to download some large content - the simulator itself is around 5Gb! It is recommended you keep reading and have a look at <a href="#a-brief-introduction-to-ros">section 5.4 (a brief introduction to ROS)</a> while waiting.</p>
+<p>The downloaded containers are not stored in your local directory, instead they are stored by docker in a local library on your own machine. All downloaded and local containers can be seen by typing.</p>
+<pre><code class="language-console">myuser@my-machine:~/Documents/FenswoodScenario$ docker images
+</code></pre>
+<h2 id="running-the-example-scenario"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.2</span> Running the Example Scenario<a class="headerlink" href="#running-the-example-scenario" title="Permanent link">¶</a></h2>
+<p>Once the download of <code>pull</code> has completed, you can run the scenario. To run the example scenario, it is a similar command except now you ask it to <code>up</code>:</p>
+<blockquote>
+<p>The simulator is build locally, so this may take a few minutes too to download dependencies and such.</p>
+</blockquote>
+<pre><code class="language-console">myuser@my-machine:~/Documents/FenswoodScenario$ docker-compose up
+</code></pre>
+<p>This will start 4 containers:</p>
+<ol>
+<li><strong>simhost</strong>: The physics simulator instance which also hosts the simulated drone model and the target spawning.</li>
+<li><strong>sitl</strong>: The software in the loop representing the onboard autopilot software.</li>
+<li><strong>mavros</strong>: This is the bridge between Mavlink and ROS. It also serves to send mavlink messages to a ground station.</li>
+<li><strong>rosbridge-suite</strong>: This is a ros-web interface that is placed there for future use.</li>
+<li><strong>ui</strong>: This is the example ui.</li>
+</ol>
+<p>Wait a minute or so for all of the containers to initialise. Once started, the simulator should be available to see in the browser.</p>
+<ol>
+<li>Open up the firefox browser (click on firefox on the sidebar, or press <kbd class="keys"><kbd class="key-windows">Win</kbd></kbd> and search for firefox)</li>
+<li>Go to <a href="http://localhost:8080">localhost:8080</a></li>
+<li>You should see something like the following</li>
+</ol>
+<p><img alt="Fenswood Firefox Screenshot" src="../imgs/fenswoodscreenshot1.png"/></p>
+<p>The web interface is known as Gazebo Web. You can fly your camera through the environment like many other 3D modelling software:</p>
+<ul>
+<li>Left Click on a location and drag does Panning/Translating</li>
+<li>Middle Click on a location and drag does rotating around a point</li>
+<li>Scrolling the Middle Mouse button will zoom you in and out.</li>
+</ul>
+<p><img alt="Fenswood Scrolling Gif" src="../imgs/fenswoodgif.gif"/></p>
+<p>The full process as a gif:</p>
+<p><img alt="Fenswood Scenario GIF" src="../imgs/starling-fenswood-demo-1.gif"/></p>
+<p>To stop the simulator from running, select this terminal and press <code>Ctrl+c</code>. Pressing once will shutdown the containers gracefully. Pressing twice will attempt to immediately kill all contianers.</p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../starling_docker/" title="2. Starling and Docker"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../intro_to_ros/" title="4. A Brief Introduction to ROS">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2022 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/StarlingUAS/FenswoodScenario" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../starling_docker/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../intro_to_ros/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

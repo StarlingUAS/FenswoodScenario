@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Repository Overview - Fenswood Scenario</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "Repository Overview";
+        var mkdocs_page_input_path = "details/repo_layout.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Fenswood Scenario
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/intro_to_linux/">1. A Brief Introduction to Linux</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/starling_docker/">2. Starling and Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/running/">3. Running the Example Fenswood Scenario</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/intro_to_ros/">4. A Brief Introduction to ROS</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/running_controller/">5. Running the Example UAV Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/inspecting/">6. Inspecting and Debugging Starling with Docker and ROS</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/summary/">7. Summary and Conclusion</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Fenswood Scenario Repository</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../building_from_source/">Building From Source</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Repository Overview</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#overview">9.1 Overview</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#world-file">9.2 World file</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#launching-and-target-spawning">9.3 Launching and target spawning</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#attachingdetaching-payload">9.4 Attaching/detaching payload</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#building">9.5 Building</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#example-controller">9.6 Example controller</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../target_spawning/">Volcano Target Spawning</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../attach_detach/">Pick up &amp; Drop off of Payload</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../gimbal/">Gimbal Control</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Fenswood Scenario</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Fenswood Scenario Repository »</li>
+<li>Repository Overview</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/StarlingUAS/FenswoodScenario/edit/master/docs/details/repo_layout.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="fenswood-scenario-repository-layout"><span class="enumerate-headings-plugin enumerate-heading-plugin">9.</span> Fenswood Scenario Repository Layout<a class="headerlink" href="#fenswood-scenario-repository-layout" title="Permanent link">¶</a></h1>
+<p>This document briefly explains the files and folders within this repository.</p>
+<h2 id="overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">9.1</span> Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
+<p>At a high level, this repository generates the <code>starling-sim-iris-ap-fenswood</code> simulation docker container which will start up a gazebo simulation of Fenswood Farm with an Iris quadcopter with an attached payload and a dynamically generated volcano caldera.</p>
+<p>It contains the following:</p>
+<ul>
+<li>Contains the world file which describes the fenswood farm environment (<code>fenswood.world</code>)</li>
+<li>Contains the script (<code>spawn_targets.py</code>) which dynamically generates the volcano caldera at runtime.</li>
+<li>Contains the gazebo ros2 plugin which allows for the attachment and detachment of a payload</li>
+<li>Contains the Dockerfile which compiles all of these into the <code>starling-sim-iris-ap</code> docker container</li>
+<li>Contains a docker-compose file which will automatically build the simulator without needing to build the container yourself manually</li>
+<li>Contains the documentation for <code>https://starlinguas.github.io/FenswoodScenario</code></li>
+<li>Contains the <code>.github</code> to enable automated builds on github actions.</li>
+<li>Contains the example controller in <code>example_controller_python_ap</code>.</li>
+</ul>
+<h2 id="world-file"><span class="enumerate-headings-plugin enumerate-heading-plugin">9.2</span> World file<a class="headerlink" href="#world-file" title="Permanent link">¶</a></h2>
+<p>In the <code>fenswood/worlds</code> directory, there exist the <code>.world</code> sdf files which specify the layout and objects in the world. This specifyies all of the objects, as well as the GPS coordinates of the origin of the world.</p>
+<p>To enable attach/detach, there is a second world which includes the <code>attach_vehicles</code> plugin <code>fenswood_with_payload.world</code>. This is enabled by default.</p>
+<p>The models used are all in the <code>fenswood/models</code> folder.</p>
+<p>The models which are not included may be in the upstream simulation containers such as <code>starling-sim-iris-ap</code> (e.g. the iris model (<code>iris_demo</code>))</p>
+<p>The <code>fenswood/setup.bash</code> file copies all of the models in.</p>
+<h2 id="launching-and-target-spawning"><span class="enumerate-headings-plugin enumerate-heading-plugin">9.3</span> Launching and target spawning<a class="headerlink" href="#launching-and-target-spawning" title="Permanent link">¶</a></h2>
+<p>The <code>fenswood/iris.launch.xml</code> configuration determins what is being launched.</p>
+<p>This calls the target spawning script is in <code>fenswood/spawn_targets.py</code> with an example target configuration in <code>fenswood/target</code>.</p>
+<h2 id="attachingdetaching-payload"><span class="enumerate-headings-plugin enumerate-heading-plugin">9.4</span> Attaching/detaching payload<a class="headerlink" href="#attachingdetaching-payload" title="Permanent link">¶</a></h2>
+<p>The <code>simulation/attach_vehicles_plugin</code> contains the Rosnode source for the global gazebo plugin which manages the attaching and detaching of sensor payloads.</p>
+<p>The payload itself is defined in <code>fenswood/models/sensor_payload/model.sdf</code> and edts should be made there to change it.</p>
+<p>The <code>fenswood/iris.launch.xml</code> launch file launches both the drone and the payload and attempts to automatically join them on statup.</p>
+<h2 id="building"><span class="enumerate-headings-plugin enumerate-heading-plugin">9.5</span> Building<a class="headerlink" href="#building" title="Permanent link">¶</a></h2>
+<p>There exists a <code>Makefile</code> which should provide automated commands for building and testing the <code>Dockerfile</code> simulator for this repository.</p>
+<h2 id="example-controller"><span class="enumerate-headings-plugin enumerate-heading-plugin">9.6</span> Example controller<a class="headerlink" href="#example-controller" title="Permanent link">¶</a></h2>
+<p>The example controller is in the <code>example_controller_python_ap</code> folder. This is a Python rosnode put into a local Docker container. The <code>docker-compose.example_drone_controller.yaml</code> docker-compose file is used to build and run this controller against the simulator run by <code>docker-compose.yml</code></p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../building_from_source/" title="Building From Source"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../target_spawning/" title="Volcano Target Spawning">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2022 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/StarlingUAS/FenswoodScenario" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../building_from_source/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../target_spawning/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

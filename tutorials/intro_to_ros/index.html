@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>4. A Brief Introduction to ROS - Fenswood Scenario</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "4. A Brief Introduction to ROS";
+        var mkdocs_page_input_path = "tutorials/intro_to_ros.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Fenswood Scenario
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro_to_linux/">1. A Brief Introduction to Linux</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../starling_docker/">2. Starling and Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../running/">3. Running the Example Fenswood Scenario</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">4. A Brief Introduction to ROS</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#a-brief-introduction-to-uav-control">4.1 A Brief Introduction to UAV Control</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#what-is-a-uav-or-a-drone">4.1.1 What is a UAV or a Drone</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#how-do-you-control-a-uav">4.1.2 How do you control a UAV</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#the-autopilot">4.1.3 The Autopilot</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mavlink-and-autopilot-communication">4.1.4 MAVLink and Autopilot communication</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#a-brief-introduction-to-ros">4.2 A Brief Introduction to ROS</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#why-does-ros-exist">4.3 Why does ROS exist?</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-ros">4.4 What is ROS</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ros-concepts-through-an-example">4.5 ROS concepts through an example</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ros2-for-starling">4.6 ROS2 for Starling</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#mavlink-and-ros-with-mavros">4.6.1 MAVLINK and ROS with MAVROS</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">4.7 Next Steps</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../running_controller/">5. Running the Example UAV Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../inspecting/">6. Inspecting and Debugging Starling with Docker and ROS</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../summary/">7. Summary and Conclusion</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Fenswood Scenario Repository</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/building_from_source/">Building From Source</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/repo_layout/">Repository Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/target_spawning/">Volcano Target Spawning</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/attach_detach/">Pick up &amp; Drop off of Payload</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/gimbal/">Gimbal Control</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Fenswood Scenario</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Tutorials »</li>
+<li>4. A Brief Introduction to ROS</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/StarlingUAS/FenswoodScenario/edit/master/docs/tutorials/intro_to_ros.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="ros2-and-uav-control"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.</span> ROS2 and UAV Control<a class="headerlink" href="#ros2-and-uav-control" title="Permanent link">¶</a></h1>
+<p>This tutorial gives a brief overview and background on UAV Control and ROS2. By the end you should have a brief understanding of how a UAV is controlled, how Starling treats a UAV and why and how we use ROS2 to communicate with a UAV.</p>
+<div class="toc">
+<ul>
+<li><a href="#ros2-and-uav-control">4. ROS2 and UAV Control</a><ul>
+<li><a href="#a-brief-introduction-to-uav-control">4.1 A Brief Introduction to UAV Control</a><ul>
+<li><a href="#what-is-a-uav-or-a-drone">4.1.1 What is a UAV or a Drone</a></li>
+<li><a href="#how-do-you-control-a-uav">4.1.2 How do you control a UAV</a></li>
+<li><a href="#the-autopilot">4.1.3 The Autopilot</a></li>
+<li><a href="#mavlink-and-autopilot-communication">4.1.4 MAVLink and Autopilot communication</a></li>
+</ul>
+</li>
+<li><a href="#a-brief-introduction-to-ros">4.2 A Brief Introduction to ROS</a></li>
+<li><a href="#why-does-ros-exist">4.3 Why does ROS exist?</a></li>
+<li><a href="#what-is-ros">4.4 What is ROS</a></li>
+<li><a href="#ros-concepts-through-an-example">4.5 ROS concepts through an example</a></li>
+<li><a href="#ros2-for-starling">4.6 ROS2 for Starling</a><ul>
+<li><a href="#mavlink-and-ros-with-mavros">4.6.1 MAVLINK and ROS with MAVROS</a></li>
+</ul>
+</li>
+<li><a href="#next-steps">4.7 Next Steps</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="a-brief-introduction-to-uav-control"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.1</span> A Brief Introduction to UAV Control<a class="headerlink" href="#a-brief-introduction-to-uav-control" title="Permanent link">¶</a></h2>
+<h3 id="what-is-a-uav-or-a-drone"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.1.1</span> What is a UAV or a Drone<a class="headerlink" href="#what-is-a-uav-or-a-drone" title="Permanent link">¶</a></h3>
+<p>A drone or unmanned aerial vehicle (UAV) is an unmanned "robotic" vehicle that can be remotely or autonomously controlled.</p>
+<p>Drones are used for many consumer, industrial, government and military applications (opens new window). These include (non exhaustively): aerial photography/video, carrying cargo, racing, search and surveying etc.</p>
+<blockquote>
+<p>Different types of drones exist for use in air, ground, sea, and underwater. These are (more formally) referred to as Unmanned Aerial Vehicles (UAV), Unmanned Aerial Systems (UAS), Unmanned Ground Vehicles (UGV), Unmanned Surface Vehicles (USV), Unmanned Underwater Vehicles (UUV).</p>
+</blockquote>
+<p>The "brain" of the drone is called an <em>autopilot</em>. It consists of flight stack software running on vehicle controller ("flight controller") hardware.</p>
+<p>A <em>multi-rotor</em> is a specific type of UAV which uses two of more lift-generating rotors to fly. One of the most common will be the Quadrotor which has 4 motors in an 'X' pattern. These UAVs provide much simpler flight control than other types of aerial vehicle. This tutorial focuses on the flight of a simple quadrotor, but Starling can be used to operate many different types of robot.</p>
+<blockquote>
+<p>From this point on in this tutorial, 'drone' or 'UAV' will refer to a multi-rotor UAV unless otherwise stated.</p>
+</blockquote>
+<h3 id="how-do-you-control-a-uav"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.1.2</span> How do you control a UAV<a class="headerlink" href="#how-do-you-control-a-uav" title="Permanent link">¶</a></h3>
+<blockquote>
+<p>Modified from <a href="https://ardupilot.org/copter/docs/what-is-a-multicopter-and-how-does-it-work.html">ardupilot docs</a></p>
+</blockquote>
+<p>A multicopter is a mechanically simple aerial vehicle whose motion is controlled by speeding or slowing multiple downward thrusting motor/propeller units. Combining different thrusts on different rotors allows the vehicle to move in free space with 6 degrees of freedom.</p>
+<p>However, manually controlling the individual thrusts of each motor in order to move the UAV is incredibly difficult, most would say its impossible even. This instability means that an on-board computer is mandatory for stable flight, as the on-board controller can perform the extreme high-rate control required to keep the drone in the air. In this "Fly by wire" paradigm, if the computer isn't working, you aren't flying.</p>
+<p>This dedicated on-board controller is referred to as the <em>autopilot</em>. This is seperate from a companion computer which is often used to direct the autopilot to achieve higher level mission goals. The autopilot combines data from small on-board MEMs gyroscopes and accelerometers (the same as those found in smart phones) to maintain an accurate estimate of its orientation and position.</p>
+<p><img alt="example multirotor" src="../imgs/3DR-quad-motors-top.jpg"/></p>
+<p>The quadcopter shown above is the simplest type of multicopter, with each motor/propeller spinning in the opposite direction from the two motors on either side of it (i.e. motors on opposite corners of the frame spin in the same direction).</p>
+<p>A quadcopter can control its roll and pitch rotation by speeding up two motors on one side and slowing down the other two. So for example if the quadcopter wanted to roll left it would speed up motors on the right side of the frame and slow down the two on the left. Similarly if it wants to rotate forward it speeds up the back two motors and slows down the front two.</p>
+<p>The copter can turn (aka “yaw”) left or right by speeding up two motors that are diagonally across from each other, and slowing down the other two.</p>
+<p>Horizontal motion is accomplished by temporarily speeding up/slowing down some motors so that the vehicle is leaning in the direction of desired travel and increasing the overall thrust of all motors so the vehicle shoots forward. Generally the more the vehicle leans, the faster it travels.</p>
+<p>Altitude is controlled by speeding up or slowing down all motors at the same time.</p>
+<p>In order to automatically map higher level motions to the thrust of the rotors, a cascading set of PID controllers is designed and provided by the autopilot. These then allow the remote control flight of the vehicle from a transmitter in your pilots hands, or via messages sent by the companion computer</p>
+<h3 id="the-autopilot"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.1.3</span> The Autopilot<a class="headerlink" href="#the-autopilot" title="Permanent link">¶</a></h3>
+<p>There is no universal controller design of converting from user inputs to motor thrust. In the same way, there are numerous other functionalities that an autopilot can cover. These can range from running control loops for gimbals, cameras and other actuation, to high level mission following and safety features. These functionalities are bundled into specific autopilot <em>firmwares</em> which each offer a slightly different set of features, as well as differing user interfaces each with their advantages and drawbacks.</p>
+<p>The two current most common autopilot firmware's in use in research settings are <a href="https://ardupilot.org/copter/index.html">Ardupilot</a> which offers the Arducopter firmware, and <a href="https://px4.io/">PX4</a> which offers Multicopter firmware. Both these firmwares are very extensive and cover numerous use cases. However, for our purposes we will only cover enabling autonomous flight through observing the <em>mode</em> of the autpilot.</p>
+<p>Both Ardupilot and PX4 use the concept of flight modes, where each mode operates a supports different levels or types of flight stabilisation and/or autonomous functions. Traditionally this is for pilots to change between different controller layouts for different applications. It's necessary to change to the correct mode for safe and controllable flight. The following table shows the most often used flight modes within Starling.</p>
+<table>
+<thead>
+<tr>
+<th><a href="https://ardupilot.org/copter/docs/flight-modes.html">Ardupilot Mode</a></th>
+<th><a href="https://docs.px4.io/v1.12/en/getting_started/flight_modes.html">PX4 Mode</a></th>
+<th>Functionality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>stabilized</td>
+<td>manual</td>
+<td>Full manual control with RC sticks being sent directly to control roll, pitch, yaw and height</td>
+</tr>
+<tr>
+<td>PosHold</td>
+<td>position</td>
+<td>UAV uses onboard sensing to stay in place, RC sticks used to translate position</td>
+</tr>
+<tr>
+<td>loiter</td>
+<td>auto.hold</td>
+<td>Automatic mode where UAV stays in the same location until further instructions given.</td>
+</tr>
+<tr>
+<td>land</td>
+<td>auto.land</td>
+<td>Automatic mode which attempts to land the UAV</td>
+</tr>
+<tr>
+<td>Guided</td>
+<td>offboard</td>
+<td>Navigates to setpoints sent to it by ground control or companion computer</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Our controllers will all ask the autopilot to switch into guided or offboard mode in order to control from the companion computer. Often they have safety elements build in which mean that the autopilot must receive instructions at a certain rate (2Hz) otherwise the autopilot will switch to loiter or land.</p>
+</blockquote>
+<p>As mentioned before, the firmware provides a given cascading PID controller for converting high level commands to motor thrusts. As a controller developer, it is also useful to understand the differences between the Ardupilot and PX4 controllers and what real world impacts that has. Thankfully in most of Starling's targeted applications we only require position control which works fairly consistently between the two firmwares.</p>
+<p>In our own work, it has generally been noted that Ardupilot seems to be more suitable for outdoor flight, and PX4 for indoor flight. For this tutorial we will be developing a controller for indoor multi-vehicle flight and so we will assume the use of PX4.</p>
+<p>If interested in outdoor flight with Ardupilot, check out <a href="https://github.com/StarlingUAS/fenswood_volcano_template">this tutorial</a> which uses Starling with Ardupilot to simulate outdoor drone flight over a volcano.</p>
+<h3 id="mavlink-and-autopilot-communication"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.1.4</span> MAVLink and Autopilot communication<a class="headerlink" href="#mavlink-and-autopilot-communication" title="Permanent link">¶</a></h3>
+<p>Once in guided or offboard mode, the autopilot expects communications using the <a href="https://mavlink.io/en/messages/common.html">MAVLINK protocol</a>. Traditionally this would have been used for a ground control station (GCS) to send commands to a UAV over a telemetry link. However, now it has also developed into a protocol for commanding the autopilot from an onboard companion computer over a USB or serial connection too. In Starling, both methods of communication between GCS or companion computer are supported.</p>
+<p>The MAVLink protocol is a set of preset commands which compatible firmwares understand and react to. However, it is often verbose and not-intuitive to develop applications with, as well as requiring a lot of prior knowledge about the state of the system. For example, it is neccesary to send a number of specific messages in order to receive individual data streams on vehicle status, location, global location and so on. These are often missed and cause lots of headaches for developers. Starling aims to streamline this through the use of the Robot Operating System so users no longer need to interact with MAVLink and the autopilot directly.</p>
+<h2 id="a-brief-introduction-to-ros"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.2</span> A Brief Introduction to ROS<a class="headerlink" href="#a-brief-introduction-to-ros" title="Permanent link">¶</a></h2>
+<p>This sections is adapted from <a href="https://dev.to/caelinsutch/a-brief-introduction-to-the-robot-operating-system-ros-15m5">this article</a></p>
+<p>ROS stands for the Robot Operating System, yet it isn't an actual operating system. It's a framework designed to expedite the development time of robot platforms. To understand what ROS is, we should understand why ROS exists in the first place.</p>
+<h2 id="why-does-ros-exist"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.3</span> Why does ROS exist?<a class="headerlink" href="#why-does-ros-exist" title="Permanent link">¶</a></h2>
+<p>In general, software developers avoid hardware like the plague. It's messy, doesn't have consistent behavior, and there's no ctrl-z in sight.</p>
+<p>Most beginner programmers think you have to have a deep knowledge of electronics and even mechanics to program robots. They think that the hardware and software are so tightly coupled, you have to know both in depth to build anything useful.</p>
+<p>Software developers became software developers for a reason, so they don't have to deal with hardware. For example, lets say you have to debug a faulty sensor. You first have to take out the sensor from the enclosure, test the sensor thoroughly with a multi meter and various test cases, document its behavior, then examine the hardware -level code to ensure that there were no bugs, and so on. That's a lot of interaction with the hardware that's not fun for someone who just wants to write some cool software.</p>
+<p>It's harder to attract good programmers if the programming is coupled deeply with hardware. This is where ROS comes into play. With ROS, you can completely abstract the hardware from software, and instead interact with an API that gives access to that data. You can forget about the hardware, and focus on developing the software that makes the robot do what you want.</p>
+<h2 id="what-is-ros"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.4</span> What is ROS<a class="headerlink" href="#what-is-ros" title="Permanent link">¶</a></h2>
+<p>ROS is essentially a framework that sits on top of an operating system which defines how particular ROS compatible programs communicate and share data with each other. Essentially ROS defines an interface between which compatible programs can communicate and interact with each other. Over the years that ROS has existed, many people have developed thousands of ROS compatible packages which can be used in a modular fashion.</p>
+<h2 id="ros-concepts-through-an-example"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.5</span> ROS concepts through an example<a class="headerlink" href="#ros-concepts-through-an-example" title="Permanent link">¶</a></h2>
+<p>To make it more concrete, imagine that on your drone you have a camera. There are also two processes which require, as inputs, that camera image. Say, a machine learning program, and a position estimation program. Traditionally, you would have to manually serialise (compress) and stream the image over a port which the other two programs could read from. But if the port changes or, say, the camera changes, lots of things have to be reconfigured.</p>
+<p>However, this sort of interaction can be made streamlined in ROS. Let us consider the programs we have as ROS <strong>nodes</strong>, i.e. a program which is responsible for one single modular purpose, with particular inputs or outputs:</p>
+<ol>
+<li>A camera image streaming node<ul>
+<li>OUT: camera image</li>
+</ul>
+</li>
+<li>A machine vision system for recognising objects<ul>
+<li>IN: camera image</li>
+<li>OUT: list of recognised objects</li>
+</ul>
+</li>
+<li>A simultaneous localisation and mapping system.<ul>
+<li>IN: camera image</li>
+<li>OUT: vehicle position</li>
+</ul>
+</li>
+</ol>
+<p>These outputs of a node define ROS <strong>topics</strong>, i.e. a single stream of one type of data. Each topic has a particular name which can be referred to. In our example, some of the topics might be:</p>
+<ul>
+<li><code>/drone/camera</code> for the camera image</li>
+<li><code>/drone/recognised_objects</code> for the machine vision system</li>
+<li><code>/drone/slam_position</code> for the SLAM system</li>
+</ul>
+<p>Then, we see that there are two avenues of communication created from these node inputs and outputs.</p>
+<div class="mermaid">graph LR
+A[Camera] --&gt;|out| node[drone/camera]
+node --in--&gt; C[Machine Vision]
+node --in--&gt; D[SLAM]
+style node fill:#f9f,stroke:#333,stroke-width:4px
+</div>
+<p>Now ROS follows a <strong>publisher/subscriber</strong> model of communication. What that means is that nodes <strong>publish</strong> data to <code>topics</code> as outputs. But that data is only sent across the network if a different nodes also <strong>subscribes</strong> to the same topic. So in our example we end up having</p>
+<ol>
+<li>A camera image streaming node<ul>
+<li>OUT: publishing to <code>/drone/camera</code></li>
+</ul>
+</li>
+<li>A machine vision system for recognising objects<ul>
+<li>IN: subscribed to <code>/drone/camera</code></li>
+<li>OUT: publishing to <code>/drone/recognised_objects</code></li>
+</ul>
+</li>
+<li>A simultaneous localisation and mapping system.<ul>
+<li>IN: subscribed to <code>/drone/camera</code></li>
+<li>OUT: publishing to <code>/drone/slam_position</code></li>
+</ul>
+</li>
+</ol>
+<div class="mermaid">graph LR
+A[Camera] --&gt;|out| node[drone/camera]
+node --in--&gt; C[Vision]
+C --&gt;|out| node1[drone/recognised_objects]
+node --in--&gt; D[SLAM]
+D --&gt;|out| node2[drone/slam_position]
+
+style node fill:#f9f,stroke:#333,stroke-width:4px
+style node1 fill:#f9f,stroke:#333,stroke-width:4px
+style node2 fill:#f9f,stroke:#333,stroke-width:4px
+</div>
+<p>Finally, the data that is sent is not just anything. The data or <strong>message</strong> is a specifically templated packet of data containing things specified for that paricular use case. In our example for <code>/drone/slam_position</code> topic, the message might be of type <a href="https://github.com/ros2/common_interfaces/blob/master/geometry_msgs/msg/Point.msg"><code>geometry_msgs/msg/Point.msg</code></a> which is defined like so:</p>
+<pre><code># This contains the position of a point in free space
+float64 x
+float64 y
+float64 z
+</code></pre>
+<p>In other words the message that the <code>/drone/slam_position</code> topic publishes must have a <code>msg.x</code>, <code>msg.y</code> and <code>msg.z</code> field, and the subscriber will only receivea message with those fields. There are a number of messages in the standard ROS library, but many libraries also define their own - as have we in some parts of Starling.</p>
+<p>This can be summarised in this diagram from the <a href="https://docs.ros.org/en/foxy/Tutorials/Understanding-ROS2-Nodes.html">ROS tutorials</a> demonstrates it very nicely:</p>
+<p><img alt="ros2 node diagram" src="../imgs/ros2node_topic_and_service.gif"/></p>
+<p>The bottom half of this shows how topics get sent from a publisher to a subscriber.</p>
+<p>Interestingly, if you put two topics together, you get some notion of two way communication. This is the basis of a <strong>service</strong> which can be seen in the top of the diagram. A <strong>service</strong> is made of a Request topic and a Response topic, but functions as a single communication type to the user. Similar to messages, a service has a defined request and response types (e.g. see <a href="https://github.com/ros2/common_interfaces/blob/master/std_srvs/srv/SetBool.srv"><code>std_srvs/srv/SetBool.srv</code></a>).  A service request will often wait until a response is received before continuing.</p>
+<p>Note that everything happens asyncronously and in parallel, when a node subscribes or sends a requests, it doesn't know when the response will arrive. It only knows it will (hopefully) arrive at some point. When a packet is received the subscriber can then run a method - this method is usually known as a <strong>callback</strong>, but that will be covered in a later tutorial.</p>
+<p>So in summary, the key conepts and terminology are:</p>
+<ul>
+<li><strong>Nodes</strong></li>
+<li><strong>Topics</strong></li>
+<li><strong>Publishers and Subscribers</strong></li>
+<li><strong>Messages</strong></li>
+<li><strong>Services</strong></li>
+</ul>
+<h2 id="ros2-for-starling"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6</span> ROS2 for Starling<a class="headerlink" href="#ros2-for-starling" title="Permanent link">¶</a></h2>
+<p>There are 2 versions of ROS - ROS1 and ROS2. ROS1, initially created in 2007 by Willow Garage, has become huge among the open source robotics community. However over the years they realised that there are a number of important features which are missing - and adding all of these would simply break ROS1. Also the most recent ROS1 distribution (ROS Noetic) is soon to reach the end of its supported life (EOL 2025) with no more ROS1 there after! (See <a href="https://roboticsbackend.com/ros1-vs-ros2-practical-overview/#Why_ROS2_and_not_keep_ROS1">this article</a> for more details!)</p>
+<p>Therefore, to future proof the system, and to ensure all users get a well rounded experience that will hopefully translate to industry experience, Starling has been implemented in ROS2. Specifically, Starling uses the <strong>Foxy Fitzroy</strong> Long Term Support (LTS) distribution throughout.</p>
+<p>There are some interesting changes between ROS1 and ROS2, but the core elements described above remain identical. A future tutorial will go into a few more details, but this is probably all the context you will need for now!</p>
+<blockquote>
+<p><strong>Note:</strong> Main thing to be aware of is if you are debugging and searching for ROS questions on the internet, be aware that there are many existing questions for ROS1 which will no longer apply for ROS2.</p>
+</blockquote>
+<h3 id="mavlink-and-ros-with-mavros"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6.1</span> MAVLINK and ROS with MAVROS<a class="headerlink" href="#mavlink-and-ros-with-mavros" title="Permanent link">¶</a></h3>
+<p>Coming back round to flying drones, we mentioned in <a href="#mavlink-and-autopilot-communication">4.1.4 </a> that we wanted to use ROS to avoid having to manually communicate with the autopilot using MAVLINK. Starling uses the <a href="http://wiki.ros.org/mavros"><strong>MAVROS</strong> ROS package</a> to do exactly that.</p>
+<p>For the autpilot, it automatically sets up a connection and translates higher level ROS commands into MAVLINK commands.</p>
+<p>For controller developers, Mavros provides a known and consistent interface through a set of topics, services and parameters to interact with. These include high level actions such as requesting the vehicle's state, local position, gps position, as well as setting setpoints for the vehicle to visit. A couple of useful topics are in the following table:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Topic</th>
+<th>Message Type</th>
+<th>Functionality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>State</td>
+<td>mavros/state</td>
+<td>mavros_msgs/msg/State</td>
+<td>Get's the current state and flight mode of the vehicle</td>
+</tr>
+<tr>
+<td>Local Position</td>
+<td>mavros/local_position/pose</td>
+<td>geometry_msgs/msg/PoseStamped</td>
+<td>Get the UAVs current coordinate position after sensor fusion</td>
+</tr>
+<tr>
+<td>GPS Position</td>
+<td>mavros/global_position/global</td>
+<td>sensor_msgs/msg/NavSatFix</td>
+<td>Get the UAVs current lat,long (if enabled)</td>
+</tr>
+<tr>
+<td>Position Setpoint</td>
+<td>mavros/setpoint_position/local</td>
+<td>geometry_msgs/msg/PoseStamped</td>
+<td>Send a target coordinate and orientation for the vehicle to fly to immediately</td>
+</tr>
+<tr>
+<td>Set Flight Mode</td>
+<td>mavros/set_mode</td>
+<td>mavros_msgs/srv/SetMode</td>
+<td>A service which sets the flight mode of the autopilot</td>
+</tr>
+<tr>
+<td>Set Data Stream Rate</td>
+<td>mavros/set_stream_rate</td>
+<td>mavros_msgs/srv/StreamRate</td>
+<td>A service which starts the data stream from the autopilot and sets its rate</td>
+</tr>
+</tbody>
+</table>
+<p>Sometimes, you may need to send raw MAVlink back to the Autopilot to enable some non-standard functionality. This can also be done through the MAVROS node too.</p>
+<p>As we are now utilising ROS, this allows us to make the most of the full ROS ecosystem in developing UAV applications.</p>
+<h2 id="next-steps"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7</span> Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<p>Hopefully now you have a basic understanding of what a drone is and how they are controlled, the function and purpose of an autopilot, as well as how ROS functions can be used. If you want some early hands on experience with ROS before delving further into Starling, we highly recommend the <a href="https://docs.ros.org/en/foxy/Tutorials.html">offical ros2 tutorials</a>.</p>
+<p>We have one more theory topic before you can start creating your own Starling projects, where we will be discussing how Starling uses and encapsulates ROS functionality.</p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../running/" title="3. Running the Example Fenswood Scenario"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../running_controller/" title="5. Running the Example UAV Controller">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2022 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/StarlingUAS/FenswoodScenario" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../running/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../running_controller/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+<script src="https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js"></script><script>mermaid.initialize({});</script></body>
+</html>

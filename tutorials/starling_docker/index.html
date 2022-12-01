@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>2. Starling and Docker - Fenswood Scenario</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "2. Starling and Docker";
+        var mkdocs_page_input_path = "tutorials/starling_docker.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Fenswood Scenario
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro_to_linux/">1. A Brief Introduction to Linux</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">2. Starling and Docker</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#what-is-the-purpose-of-starling">2.1 What is the purpose of Starling</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#what-magic-is-docker-doing">2.2 What 'magic' is docker doing</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../running/">3. Running the Example Fenswood Scenario</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../intro_to_ros/">4. A Brief Introduction to ROS</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../running_controller/">5. Running the Example UAV Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../inspecting/">6. Inspecting and Debugging Starling with Docker and ROS</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../summary/">7. Summary and Conclusion</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Fenswood Scenario Repository</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/building_from_source/">Building From Source</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/repo_layout/">Repository Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/target_spawning/">Volcano Target Spawning</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/attach_detach/">Pick up &amp; Drop off of Payload</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/gimbal/">Gimbal Control</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Fenswood Scenario</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Tutorials »</li>
+<li>2. Starling and Docker</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/StarlingUAS/FenswoodScenario/edit/master/docs/tutorials/starling_docker.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="starling-and-docker"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.</span> Starling and Docker<a class="headerlink" href="#starling-and-docker" title="Permanent link">¶</a></h1>
+<p>So now we have installed this thing called <strong>Docker</strong> - but what is it, and why does it matter to you as a user of Starling. <strong>For now, we recommend you treat <code>docker</code> as a special program that runs programs which we have written for you to use.</strong> For the purposes of this session we will not yet go into the details - we'll leave that for a future session, but we can at least give you a flavour of what Docker has allowed us to do.</p>
+<h2 id="what-is-the-purpose-of-starling"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.1</span> What is the purpose of Starling<a class="headerlink" href="#what-is-the-purpose-of-starling" title="Permanent link">¶</a></h2>
+<p>The purpose of Starling, for the use of this course, is to allow you to quickly and easily install and run a UAV simulation within a simulated environment, so that you can test your developed controllers against a semi-realistic scenario.</p>
+<p>Therefore Starling is a set of pre-built programs/executables, some of which are pre-configured for the following:</p>
+<ul>
+<li>Running a Physics Simulation with Visualisation</li>
+<li>Running the Drone autopilot control software locally (a.k.a Software In The Loop or SITL)</li>
+<li>Running the interface between Mavlink and other protocols such as the Robot Operating System (ROS)</li>
+<li>And many others...</li>
+</ul>
+<p>These pre-built programs, which we refer to as <strong>containers</strong>, are all available in the <a href="https://github.com/StarlingUAS">StarlingUAS repository on github</a>.</p>
+<p>Together these <strong>containers</strong> form a modular ecosystem of drone systems which can be composed together to develop software for real drones. Any controllers developed via the simulator can be directly ported to run on a real drone.</p>
+<h2 id="what-magic-is-docker-doing"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.2</span> What 'magic' is docker doing<a class="headerlink" href="#what-magic-is-docker-doing" title="Permanent link">¶</a></h2>
+<p>Perhaps it is easiest to explain what we (and you) would have to do if docker did not exist! Each of the elements described above uses its own programs. For example the physics simulator is a program called <a href="http://gazebosim.org/">gazebo</a>. On each of your machines you would have to manually install gazebo and configure it to work. Then you would have to do the same for SITL, Mavlink, ROS and so on, and then make sure all of them work together - configuration files, scripts etc etc. And still this is without considering how to write software which will run on a drone on a different computer altogther (we don't want the 'but sir, it worked on my machine' syndrome!).</p>
+<p>With docker, we have essentially <strong>packaged</strong> up the software with all of it's dependencies and configurations to provide only the specific service we want it to provide. We have already figured out how to install and configure, say, gazebo, and how to get it running with everything else, put those instructions together and released it to you as a <strong>container</strong>.</p>
+<p>Almost as importantly, because the installation and configuration is baked into the container, the system itself runs in a <strong>consistent and replicatable environment</strong>, hopefully allowing reproducable results each time. This can be different from running 'bare metal' on your local machine where you may have accidentally changed a configuration without knowing - leading to things going wrong.</p>
+<p>All of this means that it's less work for you as the user, as you don't need to go through the difficulties of set-up and installation of all the many individual components. And it's better for us as we can get down to the interesting stuff quicker making life better for everyone!</p>
+<p>We want to leave it like this for now, but if you want more detail you can see <a href="https://starlinguas.github.io/starling_controller_templates/docker/">this tutorial</a> here. I would recommend you come back after you have finished section this tutorial.</p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../intro_to_linux/" title="1. A Brief Introduction to Linux"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../running/" title="3. Running the Example Fenswood Scenario">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2022 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/StarlingUAS/FenswoodScenario" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../intro_to_linux/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../running/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

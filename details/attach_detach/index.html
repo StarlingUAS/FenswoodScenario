@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Pick up &amp; Drop off of Payload - Fenswood Scenario</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "Pick up \u0026 Drop off of Payload";
+        var mkdocs_page_input_path = "details/attach_detach.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Fenswood Scenario
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/intro_to_linux/">1. A Brief Introduction to Linux</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/starling_docker/">2. Starling and Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/running/">3. Running the Example Fenswood Scenario</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/intro_to_ros/">4. A Brief Introduction to ROS</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/running_controller/">5. Running the Example UAV Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/inspecting/">6. Inspecting and Debugging Starling with Docker and ROS</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/summary/">7. Summary and Conclusion</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Fenswood Scenario Repository</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../building_from_source/">Building From Source</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../repo_layout/">Repository Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../target_spawning/">Volcano Target Spawning</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Pick up &amp; Drop off of Payload</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#attaching-ros-node">11.1 Attaching Ros Node</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#implementing-support-in-your-controllers">11.2 Implementing support in your controllers</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../gimbal/">Gimbal Control</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Fenswood Scenario</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Fenswood Scenario Repository »</li>
+<li>Pick up &amp; Drop off of Payload</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/StarlingUAS/FenswoodScenario/edit/master/docs/details/attach_detach.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="payload-pick-up-and-drop-off"><span class="enumerate-headings-plugin enumerate-heading-plugin">11.</span> Payload pick up and drop off<a class="headerlink" href="#payload-pick-up-and-drop-off" title="Permanent link">¶</a></h1>
+<p>Added for the project 2022-2023</p>
+<p>A new scenario has been created where the user needs to drop off a sensor package at the caldera of the vehicle, and then after sampling for a minute, pick it back up again.</p>
+<p>This repository contains a simplified version of these mechanics which model its usage through ros topics, but not the physics of actually picking up and depositing an object, as well as ignoring the effect of a payload on the dynamics of the flight.</p>
+<p>Therefore the mechanics can be summarised as follows.</p>
+<ol>
+<li>The vehicle spawns above a sensor payload and initially attempts to attach to it when the vehicle is within 1m above the payload. The payload is rigidly attached.</li>
+<li>The vehicle should fly as normal with the payload to the caldera</li>
+<li>On deposit, the user sends a <code>{"data: false"}</code> topic to <code>/attach_vehicle/control</code> in order to detach the payload.</li>
+<li>On pick up, the vehicle flies within 1m above the payload and sends a <code>{"data: true"}</code> topic to <code>/attach_vehicle/control</code> in order to attach the payload.</li>
+</ol>
+<p>Note that this mechanic is only available if using the <code>fenswood_with_payload.world</code>. This world file also contains some of the parameters for this rosnode.</p>
+<h2 id="attaching-ros-node"><span class="enumerate-headings-plugin enumerate-heading-plugin">11.1</span> Attaching Ros Node<a class="headerlink" href="#attaching-ros-node" title="Permanent link">¶</a></h2>
+<p>The ros/gazebo node which governs the connection is in <code>simulation/attach_vehicles_plugin</code>. It is a bit of reused code from a UGV/UAV project which allowed one to carry the other.</p>
+<p>In short, in gazebo, it is exceedingly difficult to model proper collision. Any attempt to use the physics engine to "pick up" and object will end up with extreme numerical errors and effects such as rubber banding and the like. Therefore we use a shortcut where we physically join the two models together rigidly in a dynamic fashion.</p>
+<p>This plugin essentially monitors a <code>drone_model</code> and a <code>payload_model</code>. It creates one Publisher and one Subscriber of the following</p>
+<ul>
+<li><code>attach_vehicle/control</code> (std_msgs/Bool): Subscriber to attempt to attach (true) or detach (false) the payload</li>
+<li><code>attach_vehicle/status</code> (std_msgs/Bool): Publisher to show the status of the attaching. True for attached, False for detached.</li>
+</ul>
+<p>When an attach command is requested, it goes into the simulation and finds the drone and payload models. A model in gazebo is made up of static links (contains geometry, collision, etc) and joints which join the links together. It gets the root link (a.k.a the base_link) of each of these models and checks the distances to each other. Currently it checks that the drone is within <code>allowable_offset_height</code> height above the payload, and within <code>allowable_offset_horizontal</code> in the X,Y plane. If the models are within the tolerated distance, a joint is dynamically created which rigidly joins the vehicle to the payload.</p>
+<p>When a detach command is requested, this dynamic joint is removed.</p>
+<blockquote>
+<p><em>NOTE</em> At simulation startup, the vehicle and payload use the same attach mechanic to initially attach to each other. Sometimes this can fail (e.g. if the payload falls through the world for some reason). The distance between the vehicle and the payload is logged. If this fails, restart the simulation. If it continually happens, your computer may be struggling with the load.</p>
+</blockquote>
+<h2 id="implementing-support-in-your-controllers"><span class="enumerate-headings-plugin enumerate-heading-plugin">11.2</span> Implementing support in your controllers<a class="headerlink" href="#implementing-support-in-your-controllers" title="Permanent link">¶</a></h2>
+<p>As mentioned above, this mechanic only uses simply rostopics. Therefore in your controller you will only need to add a new Publisher/Subscriber pair. Then when you want the attach/detach to happen, you will need to publish a <code>std_msgs/msg/Bool</code> to the Publisher. The standard ROS2 docs should cover this use case in both Python and CPP.</p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../target_spawning/" title="Volcano Target Spawning"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../gimbal/" title="Gimbal Control">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2022 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/StarlingUAS/FenswoodScenario" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../target_spawning/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../gimbal/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

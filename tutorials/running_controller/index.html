@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>5. Running the Example UAV Controller - Fenswood Scenario</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "5. Running the Example UAV Controller";
+        var mkdocs_page_input_path = "tutorials/running_controller.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Fenswood Scenario
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro_to_linux/">1. A Brief Introduction to Linux</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../starling_docker/">2. Starling and Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../running/">3. Running the Example Fenswood Scenario</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../intro_to_ros/">4. A Brief Introduction to ROS</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">5. Running the Example UAV Controller</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#running-the-example-controller">5.1 Running the Example Controller</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-the-example-controller">5.2 What is the Example Controller</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../inspecting/">6. Inspecting and Debugging Starling with Docker and ROS</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../summary/">7. Summary and Conclusion</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Fenswood Scenario Repository</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/building_from_source/">Building From Source</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/repo_layout/">Repository Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/target_spawning/">Volcano Target Spawning</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/attach_detach/">Pick up &amp; Drop off of Payload</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/gimbal/">Gimbal Control</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Fenswood Scenario</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Tutorials »</li>
+<li>5. Running the Example UAV Controller</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/StarlingUAS/FenswoodScenario/edit/master/docs/tutorials/running_controller.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="running-the-example-uav-controller"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.</span> Running the Example UAV Controller<a class="headerlink" href="#running-the-example-uav-controller" title="Permanent link">¶</a></h1>
+<p>The next step in getting the Fenswood Scenario up and running is to actually get the UAV to do something. The previous steps simply started the simulator up, but now we have to instruct and control the UAV. For now we have provided an example controller to all students in the same <code>FenswoodScenario</code> repository under <code>example_controller_python_ap</code>.</p>
+<p>This section will take you through step by step as to how to download and run the example, a bit of information about what the example contains. This information is also available in the example repository readme.</p>
+<h2 id="running-the-example-controller"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1</span> Running the Example Controller<a class="headerlink" href="#running-the-example-controller" title="Permanent link">¶</a></h2>
+<p>First, open up a terminal and start up the Fenswood Scenario Simulator if you haven't already (Refer to <a href="#running-the-example-scenario"></a>). Double check it is open by going to Gazebo Web at <a href="http://localhost:8080">localhost:8080</a></p>
+<p>Then, <strong>open up a second terminal</strong> and navigate to the FenswoodScenario repository folder. The example controller can be started by running the following:</p>
+<pre><code class="language-console">myuser@my-machine:~/Documents/FenswoodScenario$ docker-compose -f docker-compose.example_drone_controller.yaml up
+</code></pre>
+<p>With this command, the controller will start off and attempt to find a drone on the network.</p>
+<blockquote>
+<p>If a drone has not been found, try restarting the both the Fenswood Scenario and the controller.</p>
+</blockquote>
+<p>Once a drone has been found, it will attempt to connect to the ardupilot. Once connected the path the vehicle will take is initialised and it is ready to fly if the user sends a mission go.</p>
+<blockquote>
+<p>Be patient, sometimes the ardupilot SITL can be quite slow to respond. Leave it for up to 2 or 3 minutes before trying again.</p>
+</blockquote>
+<p>Now to send a mission go, you can use the provided simple UI that is started with the FenswoodScenario. Navigate to <a href="http://localhost:3000">localhost:3000</a> in the browser, and a UI will start up:</p>
+<p><img alt="Starling UI" src="../imgs/ui.png"/></p>
+<p>If it says <code>connected to rosbridge</code> in green, then you are ready to send a mission start command. Press the Green GO Button.</p>
+<p>If you go to the terminal it should start sending waypoints. In the UI the camera image should start to change as the vehicle takes off, and you should see the vehicle takeoff in gazebo web as well.</p>
+<p>Then you should hopefully see its attempt to follow a preset trajectory towards the target location.</p>
+<p>This full process can be seen in the following gif (The commands are outdated, but you should see something very similar):
+<img alt="Fenswood Example Controller demo a" src="../imgs/starling-fenswood-demo-2a.gif"/></p>
+<p>The landing:
+<img alt="Fenswood Example Controller demo a" src="../imgs/starling-fenswood-demo-2b.gif"/></p>
+<h2 id="what-is-the-example-controller"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2</span> What is the Example Controller<a class="headerlink" href="#what-is-the-example-controller" title="Permanent link">¶</a></h2>
+<p>So what exactly is the example controller doing?</p>
+<p>Lets first start with what it is communicating with. On a real drone, the thing that controls the lower level operations of the drone is the <strong>Autopilot</strong> or <strong>Flight controller</strong>. The autopilot contains software which allows for different flight modes and translates hight level commands to motor voltages to fly the drone. As you might have come across, the primary with of controlling the autopilot is through sending Mavlink messages.</p>
+<p>Now the autopilot software itself can be swapped out and changed. For this scenario, we use the <a href="https://ardupilot.org/copter/docs/introduction.html"><strong>Ardupilot Arducopter</strong></a> firmware for the flight controller. It is important to know the specific type of software as different flight controller firmware requires the use of different flight mode and instructions.</p>
+<p>The Fenswood Scenario simulator utilises the Ardupilot Software In The Loop (SITL) simulator. This program is identical to the firmware that would be running onboard the flight controller. Then, within the example controller repository, there are two example controllers - one for Ardupilot (suffixed with <code>ap</code>), and one for the PX4 firmware (suffixed with <code>px4</code>). You can use the former to communicate with the Ardupilot SITL.</p>
+<p>The example controller talks in ROS2 to the SITL via the Mavros translation node mentioned earlier. It sends commands for things like 'takeoff', 'go there' and 'land' via topics which the Mavros node advertises. The Mavros node takes subscribes to these topics and re-publishes them to the Flight Controller using Mavlink in a way Ardupilot understands.</p>
+<p>More details will be given in the next tutorial about how this controller works under the hood, and how to develop your own.</p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../intro_to_ros/" title="4. A Brief Introduction to ROS"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../inspecting/" title="6. Inspecting and Debugging Starling with Docker and ROS">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2022 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/StarlingUAS/FenswoodScenario" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../intro_to_ros/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../inspecting/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>
