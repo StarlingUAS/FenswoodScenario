@@ -28,6 +28,7 @@ nav:
     - "6. Inspecting and Debugging Starling with Docker and ROS": "tutorials/inspecting.md"
     - "7. Summary and Conclusion": "tutorials/summary.md"
   - "Fenswood Scenario Repository":
+    - "Building From Source": "details/building_from_source.md"
     - "Repository Overview": "details/repo_layout.md"
     - "Volcano Target Spawning": "details/target_spawning.md"
     - "Pick up & Drop off of Payload": "details/attach_detach.md"
